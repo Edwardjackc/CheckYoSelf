@@ -10,11 +10,26 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header class="header__container">
+    <h1>CHECK<span>YO'</span>SELF</h1>
+    <input type="text"placeholder="Search">
   </header>
-  <main>
+  <main class="main__container">
+    <article class="main__article--card">
+    </article>
   </main>
-  <aside>
+  <aside class="aside__container">
+    <form class="aside__form">
+      <label class="aside__label">Task Title</label>
+    </form>
+    <form class="aside__form aside__form--bottom">
+      <input class="aside__input" type="text">
+      <label class="aside__label">Task Item</label>
+      <input class="aside__input"type="text">
+      <input class="aside__input"type="button"value="Make Task List">
+      <input class="aside__input"type="button"value="Clear All">
+    </form>
+    <input class="aside__input"type="button"value="Filter by Urgency">
   </aside>
 </body>
   <script src="list.js"></script>

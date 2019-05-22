@@ -1,7 +1,27 @@
 * {
-  
+  box-sizing:border-box;
+  border:1px solid red;
 }
 
-body{
+body {
   font-family: 'Open Sans', sans-serif;
+  height:100vh;
+  display:grid;
+  grid-template-columns:33% 66%;
+  grid-template-rows:5% 95%; 
+  grid-template-areas:
+    header header
+    aside main
+} 
+
+.header__container {
+  grid-area:header;
+}
+
+.main__container {
+  grid-area:main;
+}
+
+.aside__container {
+  grid-area:aside;
 }
