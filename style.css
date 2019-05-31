@@ -11,18 +11,34 @@ body {
   grid-template-rows:10%;
   grid-template-areas:
     "top top"
-    "aside main"
-    "aside main";
+    "navi main"
+    "navi main";
 } 
 
 
 /*** Header ****/
+h1 {
+  color:#ffffff;
+  margin-left:.5%;
+}
+
+span {
+  color:#ffc30c;
+}
+
 .header__container {
   background-color:#1f1f3d;
   grid-area:top;
+  display:flex;
+  align-content: center;
+  justify-content: space-between;
 }
 
-
+.header__input {
+  height:65%;
+  margin:.5rem;
+  width:350px;
+}
 
 /*** Main *****/
 .main__container {
@@ -34,7 +50,7 @@ body {
 
 /***** nav **** */
 .nav__container {
-  grid-area:aside;
+  grid-area:navi;
   background-color:#587a8a;
   display:flex;
   flex-direction: column;
@@ -44,6 +60,10 @@ body {
 .nav__form {
   display:flex;
   flex-direction: column;
+}
+
+.nav__label {
+  color:#f3f6f7;
 }
 
 .nav__input {
