@@ -12,24 +12,22 @@
 <body>
   <header class="header__container">
     <h1>CHECK <span>YO'</span> SELF</h1>
-    <input class="header__input" type="text"placeholder="Search">
+    <img src="images/search.svg"><input class="header__input" type="text"placeholder="Search">
   </header>
-  <main class="main__container">
-    <article class="main__article--card">
-    </article>
+  <main class="card__main--container">
   </main>
   <nav class="nav__container">
-    <form class="nav__form">
+    <form class="nav__form nav__form--top">
       <label class="nav__label">Task Title</label>
-    </form>
-    <form class="nav__form nav__form--bottom">
       <input class="nav__input nav__input--text" type="text">
       <label class="nav__label">Task Item</label>
       <input class="nav__input nav__input--text"type="text">
-      <input class="nav__input"type="button"value="Make Task List">
-      <input class="nav__input"type="button"value="Clear All">
     </form>
-    <input class="nav__input"type="button"value="Filter by Urgency">
+    <form class="nav__form nav__form--bottom">
+      <input class="nav__input nav__input--btn"type="button"value="Make Task List">
+      <input class="nav__input nav__input--btn"type="button"value="Clear All">
+    </form>
+    <input class="nav__input nav__input--btn nav__input--btn-submit"type="button"value="Filter by Urgency">
   </nav>
 </body>
   <script src="list.js"></script>
