@@ -2,7 +2,6 @@
   box-sizing:border-box;
   /* border:solid 1px red; */
 }
-
 body {
   font-family: 'Open Sans', sans-serif;
   height:100vh; 
@@ -15,8 +14,7 @@ body {
     "navi main";
 } 
 
-
-/*** Header ****/
+/********** Header ****************/
 h1 {
   color:#ffffff;
   margin-left:.5rem;
@@ -42,13 +40,55 @@ span {
   padding-left:.5rem;
 }
 
-/*** Main *****/
-.main__container {
+/********* Main ********/
+.card__main--container {
   grid-area:main;
-  background-color:#f3f6f7
+  background-color:#f3f6f7;
+  padding:20px;
 }
 
-/***** nav **** */
+.card__article--container {
+  border:1px solid #c7d3d8;
+  color:#1f1f3d;
+  display:flex;
+  flex-flow: column;
+  max-width: 350px;
+}
+
+.card__header {
+  display:flex;
+  color:#1f1f3d;
+  justify-content: flex-start;
+  border-bottom:1px solid #c7d3d8;
+  height:15%;
+}
+
+.card__h3--title {
+  font-size:1.1em;
+  margin-left:.5rem;
+}
+
+.card__section--main {
+  min-height:60%;
+}
+
+.card__paragraph {
+  margin:5px;
+}
+
+.card__footer {
+  border-top:1px solid #c7d3d8;
+  display:flex;
+  justify-content: space-between;
+  height:25%;
+  padding:0px 5px;
+}
+
+.card__footer--images {
+  width:25px;
+}
+
+/***** nav ******/
 .nav__container {
   grid-area:navi;
   background-color:#587a8a;
@@ -67,12 +107,12 @@ span {
   justify-content: space-between;
   min-height:25%;
 }
+
 .nav__form--bottom {
   border-bottom:2px #3c6577 solid;
   display:flex;
   justify-content: space-evenly;
   min-height: 25%;
-
 }
 
 .nav__label {
