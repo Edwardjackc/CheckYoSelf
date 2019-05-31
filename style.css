@@ -36,7 +36,7 @@ span {
 }
 
 .header__input {
-  height:65%;
+  height:50px;
   /* margin:.5rem; */
   width:350px;
 }
@@ -65,7 +65,7 @@ span {
   display:flex;
   justify-content: space-between;
   min-height:25%;
-  margin-left:.51rem;
+  /* margin-left:.51rem; */
 }
 .nav__form--bottom {
   border-bottom:2px #3c6577 solid;
@@ -79,6 +79,7 @@ span {
   display:block;
   color:#f3f6f7;
   font-size:.9em;
+  margin-left:.57rem;
 }
 
 .nav__input {
@@ -88,6 +89,7 @@ span {
   color:#ffffff;
   width:95%;
   height:50px;
+  margin-left:.51rem;
 }
 
 .nav__input--btn {
@@ -95,6 +97,7 @@ span {
   border:2px solid #1f1f3d;
   color:#ffffff;
   margin-left:.51rem;
+  width:95%;
 }
 
 .nav__input--btn-submit {
