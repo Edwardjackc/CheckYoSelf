@@ -3,19 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>Check Yo' Self </title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="normalize.css">
   <link rel="stylesheet" type="text/css" media="screen" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header class="header__container">
+    <h1>CHECK <span>YO'</span> SELF</h1>
+    <input class="header__input" type="text"placeholder="Search">
   </header>
-  <main>
+  <main class="main__container">
+    <article class="main__article--card">
+    </article>
   </main>
-  <aside>
-  </aside>
+  <nav class="nav__container">
+    <form class="nav__form">
+      <label class="nav__label">Task Title</label>
+    </form>
+    <form class="nav__form nav__form--bottom">
+      <input class="nav__input nav__input--text" type="text">
+      <label class="nav__label">Task Item</label>
+      <input class="nav__input nav__input--text"type="text">
+      <input class="nav__input"type="button"value="Make Task List">
+      <input class="nav__input"type="button"value="Clear All">
+    </form>
+    <input class="nav__input"type="button"value="Filter by Urgency">
+  </nav>
 </body>
   <script src="list.js"></script>
   <script src="main.js"></script>
