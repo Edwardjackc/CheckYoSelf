@@ -32,8 +32,8 @@ body {
 
 
 
-/***** Aside **** */
-.aside__container {
+/***** nav **** */
+.nav__container {
   grid-area:aside;
   background-color:#587a8a;
   display:flex;
@@ -41,16 +41,16 @@ body {
   padding:10px;
 }
 
-.aside__form {
+.nav__form {
   display:flex;
   flex-direction: column;
 }
 
-.aside__input {
+.nav__input {
   background-color:#1f1f3d;
   color:#ffffff;
 }
 
-.aside__input--text {
+.nav__input--text {
   background-color:#ffffff;
 }
