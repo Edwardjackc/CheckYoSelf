@@ -14,7 +14,6 @@ let navFormInputs = document.querySelector('#nav__form--top');
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 // btnDeleteTask.addEventListener('click',)
 taskInput.addEventListener('keyup', validateTaskInputs);
-
 navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
 
 // this.addEventListener('load', pageReloadConditions);
