@@ -1,13 +1,19 @@
-let cardTitle = document.querySelector('#nav__input--title');
-let cardTask = document.querySelector('#nav__input--task');
-let btnMakeList = document.querySelector('#nav__input--btn-submit-task');
-let btnClearAll = document.querySelector('#nav__input--btn-clear');
-let cardContainer = document.querySelector('#card__main--container');
+let cardTitleValue = document.querySelector('#nav__input--title');
+let taskItemValue = document.querySelector('#nav__input--task');
 
-btnMakeList.addEventListener('click', appendCard);
-btnClearAll.addEventListener('click', taskList);
-deleteItem.addEventListener('click', deleteAnItem)
-this.addEventListener('load', pageReloadConditions);
+let btnAppendTask = document.querySelector('#nav__btn--task-append');
+let btnMakeList = document.querySelector('#nav__btn-list-append');
+let btnClearAll = document.querySelector('#nav__btn-clear');
+
+let cardContainer = document.querySelector('#card__main--container');
+let navTaskContainer = document.querySelector('#nav__container--tasks');
+let navFormTop = document.querySelector('#nav__form--top');
+
+
+// btnMakeList.addEventListener('click', runListCreationLoop);
+btnAppendTask.addEventListener('click', runTaskCreationLoop);
+// navTaskContainer.addEventListener("click", deleteTaskItem);
+// this.addEventListener('load', pageReloadConditions);
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
@@ -15,14 +21,10 @@ function makeList() {
   var list = new ToDoList(Date.now(), cardTitle.value, false, taskArray);
     globalArray.push(list)
     list.saveToStorage(globalArray)
-    appendCard(list)
+    runTaskCreationLoop();
 }
 
-function validateInputs(button, input) {
-  button.disabled = input.length > 0 ? false : true;
-}
-
-function appendCard(obj) {
+function appendTaskListCard(obj) {
   cardContainer.innerHTML =
     `<article class="card__article--container">
       <header class="card__header">
@@ -41,5 +43,34 @@ function appendCard(obj) {
       <input class="card__footer--images card__footer--delete" type="image" alt="Card delete button"
       src="images/delete.svg">
       </footer>
-    </article>` + cardContainer.innerHTML;
+    </article>` +cardContainer.innerHTML;
+}
+
+function appendCreatedTaskItem() {
+  navTaskContainer.innerHTML =
+    ` <section class="nav__section--task">
+      <input type="image" class="nav__input--task-delete delete-item"id="nav__input--task-delete" src='images/delete.svg' width=25px height=20px alt="task delete button>
+      <p class="nav__paragraph--text">${taskItemValue.value}
+      </p>
+    </section>
+  `+ navTaskContainer.innerHTML;
+};
+
+function clearFormInput(form) {
+  form.clear()
+}
+
+function runListCreationLoop() {
+  validateInputs(btnMakeList,cardTitleValue);
+  appendTaskListCard();
+  clearFormInput(navFormTop);
+}
+
+function runTaskCreationLoop() {
+  validateInputs(btnAppendTask, taskItemValue);
+  appendCreatedTaskItem();
+}
+
+function validateInputs(button, input) {
+  button.disabled = input.length > 0 ? false : true;
 }
