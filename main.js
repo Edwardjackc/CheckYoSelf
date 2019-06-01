@@ -88,5 +88,5 @@ function validateTaskInputs() {
 }
 
 function validateInputs(button, input) {
-  button.disabled = input.length > 0  ? true : false;
+  button.disabled = input.value ? false : true;
 }
