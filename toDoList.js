@@ -1,15 +1,15 @@
 class toDoList{
-  constructor() {
-    this.id = id,
-    this.title = title,
-    this.tasks = tasks,
-    this.urgent = urgent
-    this.tasks = []
+  constructor(id,title,urgent,task) {
+    this.id = id;
+    this.title = title;
+    this.urgent = urgent || false;
+    this.task = task || []
   }
 
-
+//pass global array as a parameter 
   saveToStorage() {
-
+    var stringedTasks = JSON.stringify(globalArray);
+    localStorage.setItem('savedListArr', stringedTasks);
   }
 
   deleteFromStorage () {
