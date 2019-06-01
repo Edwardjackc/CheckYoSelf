@@ -126,7 +126,7 @@ span {
   align-items: center;
   background-color:#ffffff;
   border:#1f1f3d solid 2px;
-  color:#ffffff;
+  padding-left:.5rem;
   width:95%;
   height:50px;
   margin-left:.51rem;
