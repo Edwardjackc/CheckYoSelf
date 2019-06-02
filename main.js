@@ -2,17 +2,17 @@ let titleInput = document.querySelector('#nav__input--title');
 let taskInput = document.querySelector('#nav__input--task');
 
 let btnAppendTask = document.querySelector('#nav__btn--task-append');
-let btnMakeList = document.querySelector('#nav__btn-list-append');
+let btnMakeList = document.querySelector('#nav__btn--list-append');
 let btnClearAll = document.querySelector('#nav__btn-clear');
 
 let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
 
+let allTaskItems = document.querySelectorAll(".nav__paragraph--text");
 
-// btnMakeList.addEventListener('click', runListCreationLoop);
+btnMakeList.addEventListener('click', runListCreationLoop);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
-// btnDeleteTask.addEventListener('click',)
 taskInput.addEventListener('keyup', validateTaskInputs);
 navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
 
@@ -71,7 +71,7 @@ function clearFormInput(form) {
 }
 
 function runListCreationLoop() {
-  validateInputs(btnMakeList, titleInputValue);
+  validateTaskInputs()
   appendTaskListCard();
   clearFormInput(navFormInputs);
 }
@@ -84,8 +84,23 @@ function runTaskCreationLoop() {
 
 function validateTaskInputs() {
   validateInputs(btnAppendTask, taskInput);
+  validateInputs(btnMakeList, titleInput && taskInput);
 }
 
 function validateInputs(button, input) {
   button.disabled = input.value ? false : true;
 }
+
+function taskList(e) {
+  e.preventDefault();
+  var tempArray = []
+  var allTaskItems = document.querySelectorAll(".nav__paragraph--text");
+  for (var i = 0; i < allTaskOutputs.length; i++) {
+    var taskItem = {
+      id: Date.now(),
+      content: allTaskItems[i].innerText
+    }
+    tempArray.push(taskItem)
+  }
+  makeList(tempArray);
+};
