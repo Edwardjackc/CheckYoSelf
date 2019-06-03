@@ -74,6 +74,18 @@ span {
 
 .card__paragraph {
   margin:5px;
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card__paragraph--text {
+  font-size:1em;
+}
+
+.card__img--task {
+  height:20px;
+  width:20px;
 }
 
 .card__footer {
@@ -98,7 +110,7 @@ span {
 }
 
 .nav__form {
-  display:flex;
+  /* display:flex; */
   flex-direction: column;
 }
 
@@ -113,6 +125,7 @@ span {
   display:flex;
   justify-content: space-evenly;
   min-height: 25%;
+  margin-bottom: 20px;
 }
 
 .nav__label {
@@ -130,6 +143,8 @@ span {
   width:95%;
   height:50px;
   margin-left:.51rem;
+  margin-right: .51rem;
+
 }
 
 .nav__input--btn {
@@ -151,4 +166,17 @@ span {
 
 .nav__input--text {
   background-color:#ffffff;
+}
+
+.nav__div--task-item {
+  display:flex;
+  align-items: center;
+  margin: 1rem 1.1rem;
+  color:#ffffff;
+}
+
+.nav__input--task-delete {
+  height:22px;
+  width:22px;
+  margin-right:.5rem;
 }
