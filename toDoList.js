@@ -1,4 +1,4 @@
-class toDoList{
+class ToDoList{
   constructor(id,title,urgent,task) {
     this.id = id;
     this.title = title;
@@ -13,7 +13,7 @@ class toDoList{
   }
 
   deleteFromStorage () {
-
+    
   }
 
   updateToDo() {

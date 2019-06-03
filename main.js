@@ -1,31 +1,21 @@
 let titleInput = document.querySelector('#nav__input--title');
 let taskInput = document.querySelector('#nav__input--task');
-
 let btnAppendTask = document.querySelector('#nav__btn--task-append');
-let btnMakeList = document.querySelector('#nav__btn-list-append');
+let btnMakeList = document.querySelector('#nav__btn--list-append');
 let btnClearAll = document.querySelector('#nav__btn-clear');
-
 let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
+let allTaskItems = document.querySelectorAll(".nav__container--tasks");
 
-
-// btnMakeList.addEventListener('click', runListCreationLoop);
+btnMakeList.addEventListener('click', taskList);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
-// btnDeleteTask.addEventListener('click',)
 taskInput.addEventListener('keyup', validateTaskInputs);
 navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
 
 // this.addEventListener('load', pageReloadConditions);
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
-
-function makeList() {
-  var list = new ToDoList(Date.now(),titleInput.value, false, taskArray);
-    globalArray.push(list)
-    list.saveToStorage(globalArray)
-    runTaskCreationLoop();
-}
 
 function appendTaskListCard(listObj) {
   cardContainer.innerHTML =
@@ -34,7 +24,7 @@ function appendTaskListCard(listObj) {
         <h3 class="card__h3--title">${listObj.title}</h3>
       </header>
       <section class="card__section--main">
-        <p class="card__paragraph">Fam pug williamsburg PBR&B
+        <p class="card__paragraph">${taskAppendLoop(listObj)}
         </p>
       </section>
       <footer class="card__footer">
@@ -46,7 +36,7 @@ function appendTaskListCard(listObj) {
       <input class="card__footer--images card__footer--delete" type="image" alt="Card delete button"
       src="images/delete.svg">
       </footer>
-    </article>` +cardContainer.innerHTML;
+    </article>`+cardContainer.innerHTML;
 }
 
 function appendCreatedTaskItem() {
@@ -57,7 +47,7 @@ function appendCreatedTaskItem() {
       </p></input>
     </section>
   `+ navTaskContainer.innerHTML;
-};
+}
 
 function deleteCreatedTaskItem(e) {
   e.preventDefault()
@@ -71,7 +61,7 @@ function clearFormInput(form) {
 }
 
 function runListCreationLoop() {
-  validateInputs(btnMakeList, titleInputValue);
+  validateTaskInputs()
   appendTaskListCard();
   clearFormInput(navFormInputs);
 }
@@ -84,8 +74,39 @@ function runTaskCreationLoop() {
 
 function validateTaskInputs() {
   validateInputs(btnAppendTask, taskInput);
+  validateInputs(btnMakeList, titleInput && taskInput);
 }
 
 function validateInputs(button, input) {
   button.disabled = input.value ? false : true;
 }
+
+function taskList(e) {
+  e.preventDefault();
+  var tempArray = []
+  for (var i = 0; i < allTaskItems.length; i++) {
+    var taskObject = {
+      id:Date.now(),
+      content: allTaskItems[i].innerText
+  }
+  tempArray.push(taskObject)
+  makeList(tempArray);
+  };
+}
+
+function taskAppendLoop(obj) {
+  var string = ""
+  for (var i = 0; i < obj.task.length; i++) {
+    string += `<p>${obj.task[i].content}</p>`
+  }
+  return string
+};
+
+function makeList(task) {
+  if (titleInput.value && taskInput.value) {
+    var list = new ToDoList(Date.now(), titleInput.value, false, task);
+    globalArray.push(list)
+    list.saveToStorage(globalArray)
+    appendTaskListCard(list)
+  }
+};
