@@ -6,14 +6,15 @@ let btnClearAll = document.querySelector('#nav__btn-clear');
 let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
-let allTaskItems = document.querySelectorAll("#nav__container--tasks");
+
 
 /*********** Event Listeners ***********/
-btnMakeList.addEventListener("click", createList);
+btnMakeList.addEventListener("click", makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
-taskInput.addEventListener('keyup', validateTaskInputs);
-navTaskContainer.addEventListener("click", deleteTaskItem);
-this.addEventListener("load", instantiateIdeas)
+taskInput.addEventListener('keyup', validateNavInputs);
+navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
+
+// this.addEventListener("load", instantiateIdeas)
 
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
@@ -25,7 +26,7 @@ function appendListCard(listObj) {
         <h3 class="card__h3--title">${listObj.title}</h3>
       </header>
       <section class="card__section--main">
-        <p class="card__paragraph">${taskAppendLoop(listObj)}
+        <p class="card__paragraph"><img class="card__img--task" src="images/checkbox.svg">${taskAppendLoop(listObj)}
         </p>
       </section>
       <footer class="card__footer">
@@ -40,7 +41,7 @@ function appendListCard(listObj) {
     </article>`+cardContainer.innerHTML;
 }
 
-function appendCreatedTaskItem() {
+function appendTaskItem() {
   navTaskContainer.innerHTML =
     ` <section class="nav__section--task">
       <div class= nav__div--task-item>
@@ -52,13 +53,18 @@ function appendCreatedTaskItem() {
   `+ navTaskContainer.innerHTML;
 }
 
-function deleteTaskItem(e) {
+function deleteCreatedTaskItem(e) {
   e.preventDefault()
   if( e.target.closest('#nav__input--task-delete')) {
     e.target.closest('section').remove();
   }
 }
+/****  Validation functions */
+function validateInputs(button, input) {
+  button.disabled = input.value ? false : true;
+}
 
+/*** Clear Functions  */
 function clearFormInput(form) {
   form.reset()
 }
@@ -70,44 +76,44 @@ function clearFormInput(form) {
 // }
 
 function runTaskCreationLoop() {
-  appendCreatedTaskItem();
+  appendTaskItem();
   clearFormInput(navFormInputs);
   validateInputs(btnAppendTask,taskInput);
 }
 
-function validateTaskInputs() {
+function validateNavInputs() {
   validateInputs(btnAppendTask, taskInput);
   validateInputs(btnMakeList, titleInput && taskInput);
 }
 
-function validateInputs(button, input) {
-  button.disabled = input.value ? false : true;
-}
 
-function taskItemst(e) {
+/***Item functions *****/
+
+function  makeListItems(e) {
   e.preventDefault();
   var tempArray = []
-  for (var i = 0; i < allTaskItems.length; i++) {
+  var allTaskOutputs = document.querySelectorAll('.nav__div--task-item');
+  for (var i = 0; i < allTaskOutputs.length; i++) {
     var taskObject = {
-      id:Date.now(),
-      content: allTaskItems[i].innerText,
-      checked:false 
+      id: Date.now(),
+      content: allTaskOutputs[i].innerText
+    }
+    tempArray.push(taskObject)
   }
-  tempArray.push(taskObject)
-  makeList(tempArray);
-  };
-}
+  createListObject(tempArray);
+};
 
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
-    string += `<li class="card__paragraph--text">${obj.task[i].content}</li>`
+    string += `<p class="card__paragraph--text">${obj.task[i].content}</p>`
   }
   return string
 };
 
-function makeList(task) {
-  debugger;
+
+/******Card List functions** */
+function createListObject(task) {
   if (titleInput.value && navTaskContainer.innerText) {
     var list = new ToDoList(Date.now(), titleInput.value, false, task);
     globalArray.push(list);
@@ -118,13 +124,24 @@ function makeList(task) {
   }
 };
 
-function instantiateIdeas() {
-  if (globalArray.length !== 0) {
-    const newArray = globalArray.map(ideaObj => {
-      const newList = new ToDoList({ ...ideaObj });
-      return newList;
-    });
-    globalArray = newArray;
-    appendListCard(globalArray)
-  }
-}
+// function instantiateIdeas() {
+//   if (globalArray.length !== 0) {
+//     const newArray = globalArray.map(ideaObj => {
+//       const newList = new ToDoList({ ...ideaObj });
+//       return newList;
+//     });
+//     globalArray = newArray;
+//     appendListCard(globalArray)
+//   }
+// }
+
+
+// map items and append to card
+// function based on dom interations that returns an array of the adjusted items then pushes to
+// storage 
+
+
+// Goals, exceptional Comp, JS, HTML, CSS, and advance beginner func 
+//Monday --- card appending with correct style of items
+// --------- card persisting 
+// --------- 

@@ -83,6 +83,11 @@ span {
   font-size:1em;
 }
 
+.card__img--task {
+  height:20px;
+  width:20px;
+}
+
 .card__footer {
   border-top:1px solid #c7d3d8;
   display:flex;
