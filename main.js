@@ -6,18 +6,19 @@ let btnClearAll = document.querySelector('#nav__btn-clear');
 let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
-let allTaskItems = document.querySelectorAll(".nav__container--tasks");
+let allTaskItems = document.querySelectorAll("#nav__container--tasks");
 
-btnMakeList.addEventListener('click', taskList);
+/*********** Event Listeners ***********/
+btnMakeList.addEventListener("click", createList);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateTaskInputs);
-navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
+navTaskContainer.addEventListener("click", deleteTaskItem);
+this.addEventListener("load", instantiateIdeas)
 
-// this.addEventListener('load', pageReloadConditions);
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
-function appendTaskListCard(listObj) {
+function appendListCard(listObj) {
   cardContainer.innerHTML =
     `<article class="card__article--container">
       <header class="card__header">
@@ -42,17 +43,19 @@ function appendTaskListCard(listObj) {
 function appendCreatedTaskItem() {
   navTaskContainer.innerHTML =
     ` <section class="nav__section--task">
-      <input type="image" class="nav__input--task-delete delete-item"id="nav__input--task-delete" src='images/delete.svg' width=25px height=20px alt="task delete button>
-      <p class="nav__paragraph--text">${taskInput.value}
-      </p></input>
+      <div class= nav__div--task-item>
+        <input type="image" class="nav__input--task-delete delete-item" id="nav__input--task-delete" src="images/delete.svg" alt="task delete button>
+        <p class="nav__paragraph--text"id="nav__paragraph--text">${taskInput.value}
+        </p></input>
+      </div>
     </section>
   `+ navTaskContainer.innerHTML;
 }
 
-function deleteCreatedTaskItem(e) {
+function deleteTaskItem(e) {
   e.preventDefault()
-  if( e.target.closest("#nav__input--task-delete")) {
-    e.target.closest("section").remove();
+  if( e.target.closest('#nav__input--task-delete')) {
+    e.target.closest('section').remove();
   }
 }
 
@@ -60,16 +63,16 @@ function clearFormInput(form) {
   form.reset()
 }
 
-function runListCreationLoop() {
-  validateTaskInputs()
-  appendTaskListCard();
-  clearFormInput(navFormInputs);
-}
+// function runListCreationLoop() {
+//   validateInputs(btnMakeList, titleInput)
+//   appendListCard();
+//   clearFormInput(navFormInputs);
+// }
 
 function runTaskCreationLoop() {
   appendCreatedTaskItem();
   clearFormInput(navFormInputs);
-  validateTaskInputs();
+  validateInputs(btnAppendTask,taskInput);
 }
 
 function validateTaskInputs() {
@@ -81,13 +84,14 @@ function validateInputs(button, input) {
   button.disabled = input.value ? false : true;
 }
 
-function taskList(e) {
+function taskItemst(e) {
   e.preventDefault();
   var tempArray = []
   for (var i = 0; i < allTaskItems.length; i++) {
     var taskObject = {
       id:Date.now(),
-      content: allTaskItems[i].innerText
+      content: allTaskItems[i].innerText,
+      checked:false 
   }
   tempArray.push(taskObject)
   makeList(tempArray);
@@ -97,16 +101,30 @@ function taskList(e) {
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
-    string += `<p>${obj.task[i].content}</p>`
+    string += `<li class="card__paragraph--text">${obj.task[i].content}</li>`
   }
   return string
 };
 
 function makeList(task) {
-  if (titleInput.value && taskInput.value) {
+  debugger;
+  if (titleInput.value && navTaskContainer.innerText) {
     var list = new ToDoList(Date.now(), titleInput.value, false, task);
-    globalArray.push(list)
-    list.saveToStorage(globalArray)
-    appendTaskListCard(list)
+    globalArray.push(list);
+    list.saveToStorage(globalArray);
+    navTaskContainer.innerHTML = "";
+    appendListCard(list);
+    clearFormInput(navFormInputs);
   }
 };
+
+function instantiateIdeas() {
+  if (globalArray.length !== 0) {
+    const newArray = globalArray.map(ideaObj => {
+      const newList = new ToDoList({ ...ideaObj });
+      return newList;
+    });
+    globalArray = newArray;
+    appendListCard(globalArray)
+  }
+}
