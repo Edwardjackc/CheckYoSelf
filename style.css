@@ -110,7 +110,7 @@ span {
 }
 
 .nav__form {
-  display:flex;
+  /* display:flex; */
   flex-direction: column;
 }
 
@@ -125,6 +125,7 @@ span {
   display:flex;
   justify-content: space-evenly;
   min-height: 25%;
+  margin-bottom: 20px;
 }
 
 .nav__label {
@@ -142,6 +143,8 @@ span {
   width:95%;
   height:50px;
   margin-left:.51rem;
+  margin-right: .51rem;
+
 }
 
 .nav__input--btn {

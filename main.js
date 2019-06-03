@@ -26,19 +26,22 @@ function appendListCard(listObj) {
         <h3 class="card__h3--title">${listObj.title}</h3>
       </header>
       <section class="card__section--main">
-        <p class="card__paragraph"><img class="card__img--task" src="images/checkbox.svg">${taskAppendLoop(listObj)}
+        <p class="card__paragraph">${taskAppendLoop(
+          listObj
+        )}
         </p>
       </section>
       <footer class="card__footer">
       <input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
         src=${
-        listObj.urgent === true
-        ? "images/urgent-active.svg"
-        : "images/urgent.svg"}>
+          listObj.urgent === true
+            ? "images/urgent-active.svg"
+            : "images/urgent.svg"
+        }>
       <input class="card__footer--images card__footer--delete" type="image" alt="Card delete button"
       src="images/delete.svg">
       </footer>
-    </article>`+cardContainer.innerHTML;
+    </article>` + cardContainer.innerHTML;
 }
 
 function appendTaskItem() {
@@ -106,10 +109,13 @@ function  makeListItems(e) {
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
-    string += `<p class="card__paragraph--text">${obj.task[i].content}</p>`
+    string += `<input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
+      obj.task[i].content
+    }</p></input>`;
   }
   return string
 };
+
 
 
 /******Card List functions** */
