@@ -1,7 +1,8 @@
 * {
   box-sizing:border-box;
-  border:solid 1px red;
+  /* border:solid 1px red; */
 }
+
 body {
   font-family: 'Open Sans', sans-serif;
   height:100vh; 
@@ -102,11 +103,12 @@ span {
 
 /***** nav ******/
 .nav__container {
-  grid-area:navi;
-  background-color:#587a8a;
-  display:flex;
-  flex-direction: column;
-  padding:30px 0px;
+    grid-area: navi;
+    background-color: #587a8a;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-right: .31rem;
 }
 
 .nav__form {
@@ -146,9 +148,17 @@ span {
 }
 
 .nav__div--append-btn {
-  width:100%;
+  width:98%;
   display:flex;
 }
+
+.nav__input--icon {
+  width:60px;
+  background-color:#1f1f3d;
+  border:2px solid #1f1f3d;
+  height: 50px;
+}
+
 
 .nav__input--btn {
   background-color:#1f1f3d;
@@ -169,6 +179,7 @@ span {
 
 .nav__input--text {
   background-color:#ffffff;
+  margin-bottom:10px;
 }
 
 .nav__div--task-item {

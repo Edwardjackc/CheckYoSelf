@@ -75,6 +75,12 @@ function clearInputs() {
   clearFormInput(navFormInputs)
 }
 
+// function hiddenMessage() {
+//   if (cardContainer.innerHTML = false) {
+
+//   }
+// }
+
 // function runListCreationLoop() {
 //   validateInputs(btnMakeList, titleInput)
 //   appendListCard();
