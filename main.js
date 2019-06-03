@@ -9,7 +9,8 @@ let navFormInputs = document.querySelector('#nav__form--top');
 
 
 /*********** Event Listeners ***********/
-btnMakeList.addEventListener("click", makeListItems);
+btnClearAll.addEventListener('click', clearInputs)
+btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
 navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
@@ -26,9 +27,7 @@ function appendListCard(listObj) {
         <h3 class="card__h3--title">${listObj.title}</h3>
       </header>
       <section class="card__section--main">
-        <p class="card__paragraph">${taskAppendLoop(
-          listObj
-        )}
+        <p class="card__paragraph">${taskAppendLoop(listObj)}
         </p>
       </section>
       <footer class="card__footer">
@@ -70,6 +69,10 @@ function validateInputs(button, input) {
 /*** Clear Functions  */
 function clearFormInput(form) {
   form.reset()
+}
+
+function clearInputs() {
+  clearFormInput(navFormInputs)
 }
 
 // function runListCreationLoop() {

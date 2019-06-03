@@ -1,6 +1,6 @@
 * {
   box-sizing:border-box;
-  /* border:solid 1px red; */
+  border:solid 1px red;
 }
 body {
   font-family: 'Open Sans', sans-serif;
@@ -124,7 +124,7 @@ span {
   border-bottom:2px #3c6577 solid;
   display:flex;
   justify-content: space-evenly;
-  min-height: 25%;
+  min-height: 150px;
   margin-bottom: 20px;
 }
 
@@ -143,8 +143,11 @@ span {
   width:95%;
   height:50px;
   margin-left:.51rem;
-  margin-right: .51rem;
+}
 
+.nav__div--append-btn {
+  width:100%;
+  display:flex;
 }
 
 .nav__input--btn {
