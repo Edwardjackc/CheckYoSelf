@@ -14,7 +14,7 @@ btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
 navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
-this.addEventListener("load", reloadConditions)
+this.addEventListener("load", loadConditions)
 
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
@@ -58,6 +58,17 @@ function appendTaskItem() {
 }
 
 
+
+function clearDisplayMessage(e) {
+  e.preventDefault()
+  var hiddenMessage = document.querySelector("#main__label--message");
+  if (bottomContainer.contains(hiddenMessage)) {
+    bottomContainer.removeChild(hidden);
+  }
+}
+
+
+
 /**********  Delete functions  **********/
 function deleteCreatedTaskItem(e) {
   e.preventDefault()
@@ -81,12 +92,6 @@ function clearFormInput(form) {
 function clearInputs() {
   clearFormInput(navFormInputs)
 }
-
-// function hiddenMessage() {
-//   if (cardContainer.innerHTML = false) {
-
-//   }
-// }
 
 // function runListCreationLoop() {
 //   validateInputs(btnMakeList, titleInput)
@@ -122,16 +127,26 @@ function  makeListItems(e) {
   createListObject(tempArray);
 };
 
+// function taskAppendLoop(array) {
+//   // var task= array.obj.task
+//   var string = ""
+//   for (var i = 0; i < array.length; i++) {
+//     string += `<input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
+//       obj.task[i].content
+//     }</p></input>`;
+//   }
+//   return string
+// };
+
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
     string += `<input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
       obj.task[i].content
-    }</p></input>`;
+      }</p></input>`;
   }
   return string
 };
-
 
 /******Card List functions** */
 function createListObject(task) {
@@ -139,28 +154,62 @@ function createListObject(task) {
     var list = new ToDoList(Date.now(), titleInput.value, false, task);
     globalArray.push(list);
     list.saveToStorage(globalArray);
-    navTaskContainer.innerHTML = "";
+    navTaskContainer.innerHTML = null;
     appendListCard(list);
     clearFormInput(navFormInputs);
   }
   return list 
 };
 
-function instantiateIdeas() {
+// function createListObject() {
+//   var list = new ToDoList({
+//     id: Date.now(),
+//     title: titleInput.value,
+//     urgent: false,
+//     task:task
+//   });
+
+//   globalArray.push(list);
+//   list.saveToStorage(globalArray);
+//   navTaskContainer.innerHTML = null;
+//   appendListCard(list);
+//   clearFormInput(navFormInputs);
+// }
+
+
+
+function reload() {
   if (globalArray.length !== 0) {
-    const newArray = globalArray.map(ideaObj => {
-      const newList = new ToDoList({ ...ideaObj });
+    const newArray = globalArray.map(listObj => {
+      const newList = new ToDoList({ ...listObj});
+      console.log(newList)
       return newList;
     });
     globalArray = newArray;
-    appendListCard(globalArray)
   }
 }
 
-
-function reloadConditions() {
-  instantiateIdeas();
+function loadConditions() {
+  reloadPageDom();
+  reload();
 }
+
+function reloadPageDom() {
+  if (globalArray.length !== 0) {
+    globalArray.forEach(function (item) {
+      appendListCard(item);
+    })
+  }
+}
+
+function locateIndex(e) {
+  var parent = e.target.closest('article');
+  var parentId = parseInt(parent.dataset.id);
+  var locatedIndex = globalArray.findIndex(function (list) {
+    return list.id === parentId
+  })
+  return locatedIndex
+};
 
 
 // map items and append to card
