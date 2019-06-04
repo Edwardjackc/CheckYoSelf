@@ -41,6 +41,16 @@ span {
   padding-left:.5rem;
 }
 
+.header__div--inputs {
+  display:flex;
+  height:50px;
+}
+
+.header__img {
+  height: 50px;
+  background-color: #f3f6f7;
+}
+
 /********* Main ********/
 .card__main--container {
   grid-area:main;
@@ -103,12 +113,11 @@ span {
 
 /***** nav ******/
 .nav__container {
-    grid-area: navi;
-    background-color: #587a8a;
-    display: flex;
-    flex-direction: column;
-    padding-top: 30px;
-    padding-right: .31rem;
+  grid-area: navi;
+  background-color: #587a8a;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
 }
 
 .nav__form {

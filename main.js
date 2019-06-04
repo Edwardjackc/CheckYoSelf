@@ -14,12 +14,14 @@ btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
 navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
-
-// this.addEventListener("load", instantiateIdeas)
+this.addEventListener("load", reloadConditions)
 
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
+console.log(globalArray)
+
+/********* appending functions *********/
 function appendListCard(listObj) {
   cardContainer.innerHTML =
     `<article class="card__article--container">
@@ -55,18 +57,23 @@ function appendTaskItem() {
   `+ navTaskContainer.innerHTML;
 }
 
+
+/**********  Delete functions  **********/
 function deleteCreatedTaskItem(e) {
   e.preventDefault()
   if( e.target.closest('#nav__input--task-delete')) {
     e.target.closest('section').remove();
   }
 }
-/****  Validation functions */
+
+
+/****  Validation functions ********/
+
 function validateInputs(button, input) {
   button.disabled = input.value ? false : true;
 }
 
-/*** Clear Functions  */
+/******** Clear Functions *********/
 function clearFormInput(form) {
   form.reset()
 }
@@ -99,7 +106,7 @@ function validateNavInputs() {
 }
 
 
-/***Item functions *****/
+/********** Item functions ************/
 
 function  makeListItems(e) {
   e.preventDefault();
@@ -126,7 +133,6 @@ function taskAppendLoop(obj) {
 };
 
 
-
 /******Card List functions** */
 function createListObject(task) {
   if (titleInput.value && navTaskContainer.innerText) {
@@ -137,18 +143,24 @@ function createListObject(task) {
     appendListCard(list);
     clearFormInput(navFormInputs);
   }
+  return list 
 };
 
-// function instantiateIdeas() {
-//   if (globalArray.length !== 0) {
-//     const newArray = globalArray.map(ideaObj => {
-//       const newList = new ToDoList({ ...ideaObj });
-//       return newList;
-//     });
-//     globalArray = newArray;
-//     appendListCard(globalArray)
-//   }
-// }
+function instantiateIdeas() {
+  if (globalArray.length !== 0) {
+    const newArray = globalArray.map(ideaObj => {
+      const newList = new ToDoList({ ...ideaObj });
+      return newList;
+    });
+    globalArray = newArray;
+    appendListCard(globalArray)
+  }
+}
+
+
+function reloadConditions() {
+  instantiateIdeas();
+}
 
 
 // map items and append to card
