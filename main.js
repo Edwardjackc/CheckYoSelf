@@ -13,8 +13,9 @@ btnClearAll.addEventListener('click', clearInputs)
 btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
-navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
-this.addEventListener("load", loadConditions)
+navTaskContainer.addEventListener('click', deleteCreatedTaskItem);
+cardContainer.addEventListener("click", deleteCard);
+this.addEventListener('load', loadConditions);
 
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
@@ -55,8 +56,6 @@ function appendTaskItem() {
   `+ navTaskContainer.innerHTML;
 }
 
-
-
 function clearDisplayMessage(e) {
   e.preventDefault()
   var hiddenMessage = document.querySelector("#main__label--message");
@@ -88,12 +87,6 @@ function clearInputs() {
   clearFormInput(navFormInputs)
 }
 
-// function runListCreationLoop() {
-//   validateInputs(btnMakeList, titleInput)
-//   appendListCard();
-//   clearFormInput(navFormInputs);
-// }
-
 function runTaskCreationLoop() {
   appendTaskItem();
   clearFormInput(navFormInputs);
@@ -123,17 +116,6 @@ function  makeListItems(e) {
   createListObject(tempArray);
 };
 
-// function taskAppendLoop(array) {
-//   // var task= array.obj.task
-//   var string = ""
-//   for (var i = 0; i < array.length; i++) {
-//     string += `<input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
-//       obj.task[i].content
-//     }</p></input>`;
-//   }
-//   return string
-// };
-
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
@@ -160,23 +142,7 @@ function createListObject(task) {
   return list 
 };
 
-// function createListObject() {
-//   var list = new ToDoList({
-//     id: Date.now(),
-//     title: titleInput.value,
-//     urgent: false,
-//     task:task
-//   });
-
-//   globalArray.push(list);
-//   list.saveToStorage(globalArray);
-//   navTaskContainer.innerHTML = null;
-//   appendListCard(list);
-//   clearFormInput(navFormInputs);
-// }
-
 function reloadToDoList() {
-  debugger;
   console.log('global array', globalArray)
   if (globalArray.length !== 0) {
     const newArray = globalArray.map(listObj => {
@@ -202,23 +168,31 @@ function reloadPageDom() {
   }
 }
 
-function locateIndex(e) {
-  var parent = e.target.closest('article');
-  var parentId = parseInt(parent.dataset.id);
-  var locatedIndex = globalArray.findIndex(function (list) {
-    return list.id === parentId
-  })
-  return locatedIndex
-};
-
-
 function deleteCard(e) {
-  if (e.target.classList.contains("card__delete--btn")) {
-    e.target.closest('article').remove();
-    // var locatedId = locateId(e);
-    // globalArray[locatedId].deleteFromStorage(locatedId);
+  if (e.target.classList.contains("card__footer--delete")) {
+    e.target.closest("article").remove();
+    var locatedIndex = locateIndex(e);
+    var locatedId = locateId(e);
+    globalArray[locatedIndex].deleteFromStorage(locatedId);
   }
 }
+
+function locateId(e) {
+  var parent = e.target.closest("article");
+  var parentId = parseInt(parent.dataset.id);
+  return parentId;
+}
+
+function locateIndex(e) {
+  var parent = e.target.closest("article");
+  var parentId = parseInt(parent.dataset.id);
+  var locatedIndex = globalArray.findIndex(function (list) {
+    return list.id === parentId;
+  });
+  return locatedIndex;
+}
+
+
 // map items and append to card
 // function based on dom interations that returns an array of the adjusted items then pushes to
 // storage 

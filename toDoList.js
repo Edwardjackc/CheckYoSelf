@@ -12,8 +12,8 @@ class ToDoList{
     localStorage.setItem('savedListArr', stringedTasks);
   }
 
-  deleteFromStorage () {
-    var newGlobalArray = globalArray.filter(function (idea) {
+  deleteFromStorage(locatedId) {
+    var newGlobalArray = globalArray.filter(function (list) {
       return list.id !== locatedId;
     });
     globalArray = newGlobalArray;
