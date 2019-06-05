@@ -11,5 +11,5 @@ Check Yo'Self focuses on adding tasks to a checklist that helps organize ones th
 ![mobile image](/images/mobile.png)
 
 ## Comp screenshots 
-![desktop comp screenshot](/images/checkYoSelfComp.jpeg)
-![mobile comp screenshot](/images/checkYoSelfMobile.jpeg)
+![desktop comp screenshot](/images/checkYoSelfComp.jpg)
+![mobile comp screenshot](/images/checkYoSelfMobile.jpg)
