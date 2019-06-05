@@ -19,28 +19,26 @@ this.addEventListener("load", loadConditions)
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
-console.log(globalArray)
-
 /********* appending functions *********/
-function appendListCard(listObj) {
+function appendListCard(list) {
   cardContainer.innerHTML =
-    `<article class="card__article--container">
+    `<article class="card__article--container"data-id=${list.id}>
       <header class="card__header">
-        <h3 class="card__h3--title">${listObj.title}</h3>
+        <h3 class="card__h3--title">${list.title}</h3>
       </header>
       <section class="card__section--main">
-        <p class="card__paragraph">${taskAppendLoop(listObj)}
+        <p class="card__paragraph">${taskAppendLoop(list)}
         </p>
       </section>
       <footer class="card__footer">
       <input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
         src=${
-          listObj.urgent === true
+          list.urgent === true
             ? "images/urgent-active.svg"
             : "images/urgent.svg"
         }>
-      <input class="card__footer--images card__footer--delete" type="image" alt="Card delete button"
-      src="images/delete.svg">
+      <input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
+      src="images/delete.svg"}>
       </footer>
     </article>` + cardContainer.innerHTML;
 }
@@ -65,9 +63,7 @@ function clearDisplayMessage(e) {
   if (bottomContainer.contains(hiddenMessage)) {
     bottomContainer.removeChild(hidden);
   }
-}
-
-
+} 
 
 /**********  Delete functions  **********/
 function deleteCreatedTaskItem(e) {
@@ -76,7 +72,6 @@ function deleteCreatedTaskItem(e) {
     e.target.closest('section').remove();
   }
 }
-
 
 /****  Validation functions ********/
 
@@ -119,10 +114,11 @@ function  makeListItems(e) {
   var allTaskOutputs = document.querySelectorAll('.nav__div--task-item');
   for (var i = 0; i < allTaskOutputs.length; i++) {
     var taskObject = {
-      id: Date.now(),
+      id:Date.now(),
       content: allTaskOutputs[i].innerText
     }
     tempArray.push(taskObject)
+    console.log('tempArray', tempArray)
   }
   createListObject(tempArray);
 };
@@ -150,8 +146,11 @@ function taskAppendLoop(obj) {
 
 /******Card List functions** */
 function createListObject(task) {
+  console.log('hi',task)
   if (titleInput.value && navTaskContainer.innerText) {
-    var list = new ToDoList(Date.now(), titleInput.value, false, task);
+    var list = new ToDoList(Date.now(),titleInput.value, false, task);
+    console.log('list', list)
+
     globalArray.push(list);
     list.saveToStorage(globalArray);
     navTaskContainer.innerHTML = null;
@@ -176,22 +175,23 @@ function createListObject(task) {
 //   clearFormInput(navFormInputs);
 // }
 
-
-
-function reload() {
+function reloadToDoList() {
+  debugger;
+  console.log('global array', globalArray)
   if (globalArray.length !== 0) {
     const newArray = globalArray.map(listObj => {
-      const newList = new ToDoList({ ...listObj});
-      console.log(newList)
+      const newList = new ToDoList(listObj.id,listObj.title, false, listObj.task);
+      console.log('new list', newList)
       return newList;
     });
     globalArray = newArray;
   }
 }
 
+
 function loadConditions() {
   reloadPageDom();
-  reload();
+  reloadToDoList();
 }
 
 function reloadPageDom() {
@@ -212,6 +212,13 @@ function locateIndex(e) {
 };
 
 
+function deleteCard(e) {
+  if (e.target.classList.contains("card__delete--btn")) {
+    e.target.closest('article').remove();
+    // var locatedId = locateId(e);
+    // globalArray[locatedId].deleteFromStorage(locatedId);
+  }
+}
 // map items and append to card
 // function based on dom interations that returns an array of the adjusted items then pushes to
 // storage 
