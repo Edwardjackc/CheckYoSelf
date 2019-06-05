@@ -9,37 +9,37 @@ let navFormInputs = document.querySelector('#nav__form--top');
 
 
 /*********** Event Listeners ***********/
-btnMakeList.addEventListener("click", makeListItems);
+btnClearAll.addEventListener('click', clearInputs)
+btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
-navTaskContainer.addEventListener("click", deleteCreatedTaskItem);
-
-// this.addEventListener("load", instantiateIdeas)
+navTaskContainer.addEventListener('click', deleteCreatedTaskItem);
+cardContainer.addEventListener("click", deleteCard);
+this.addEventListener('load', loadConditions);
 
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
-function appendListCard(listObj) {
+/********* appending functions *********/
+function appendListCard(list) {
   cardContainer.innerHTML =
-    `<article class="card__article--container">
+    `<article class="card__article--container"data-id=${list.id}>
       <header class="card__header">
-        <h3 class="card__h3--title">${listObj.title}</h3>
+        <h3 class="card__h3--title">${list.title}</h3>
       </header>
       <section class="card__section--main">
-        <p class="card__paragraph">${taskAppendLoop(
-          listObj
-        )}
+        <p class="card__paragraph">${taskAppendLoop(list)}
         </p>
       </section>
       <footer class="card__footer">
       <input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
         src=${
-          listObj.urgent === true
+          list.urgent === true
             ? "images/urgent-active.svg"
             : "images/urgent.svg"
         }>
-      <input class="card__footer--images card__footer--delete" type="image" alt="Card delete button"
-      src="images/delete.svg">
+      <input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
+      src="images/delete.svg"}>
       </footer>
     </article>` + cardContainer.innerHTML;
 }
@@ -56,27 +56,36 @@ function appendTaskItem() {
   `+ navTaskContainer.innerHTML;
 }
 
+function clearDisplayMessage(e) {
+  e.preventDefault()
+  var hiddenMessage = document.querySelector("#main__label--message");
+  if (bottomContainer.contains(hiddenMessage)) {
+    bottomContainer.removeChild(hidden);
+  }
+} 
+
+/**********  Delete functions  **********/
 function deleteCreatedTaskItem(e) {
   e.preventDefault()
   if( e.target.closest('#nav__input--task-delete')) {
     e.target.closest('section').remove();
   }
 }
-/****  Validation functions */
+
+/****  Validation functions ********/
+
 function validateInputs(button, input) {
   button.disabled = input.value ? false : true;
 }
 
-/*** Clear Functions  */
+/******** Clear Functions *********/
 function clearFormInput(form) {
   form.reset()
 }
 
-// function runListCreationLoop() {
-//   validateInputs(btnMakeList, titleInput)
-//   appendListCard();
-//   clearFormInput(navFormInputs);
-// }
+function clearInputs() {
+  clearFormInput(navFormInputs)
+}
 
 function runTaskCreationLoop() {
   appendTaskItem();
@@ -90,7 +99,7 @@ function validateNavInputs() {
 }
 
 
-/***Item functions *****/
+/********** Item functions ************/
 
 function  makeListItems(e) {
   e.preventDefault();
@@ -98,10 +107,11 @@ function  makeListItems(e) {
   var allTaskOutputs = document.querySelectorAll('.nav__div--task-item');
   for (var i = 0; i < allTaskOutputs.length; i++) {
     var taskObject = {
-      id: Date.now(),
+      id:Date.now(),
       content: allTaskOutputs[i].innerText
     }
     tempArray.push(taskObject)
+    console.log('tempArray', tempArray)
   }
   createListObject(tempArray);
 };
@@ -111,35 +121,76 @@ function taskAppendLoop(obj) {
   for (var i = 0; i < obj.task.length; i++) {
     string += `<input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
       obj.task[i].content
-    }</p></input>`;
+      }</p></input>`;
   }
   return string
 };
 
-
-
 /******Card List functions** */
 function createListObject(task) {
+  console.log('hi',task)
   if (titleInput.value && navTaskContainer.innerText) {
-    var list = new ToDoList(Date.now(), titleInput.value, false, task);
+    var list = new ToDoList(Date.now(),titleInput.value, false, task);
+    console.log('list', list)
+
     globalArray.push(list);
     list.saveToStorage(globalArray);
-    navTaskContainer.innerHTML = "";
+    navTaskContainer.innerHTML = null;
     appendListCard(list);
     clearFormInput(navFormInputs);
   }
+  return list 
 };
 
-// function instantiateIdeas() {
-//   if (globalArray.length !== 0) {
-//     const newArray = globalArray.map(ideaObj => {
-//       const newList = new ToDoList({ ...ideaObj });
-//       return newList;
-//     });
-//     globalArray = newArray;
-//     appendListCard(globalArray)
-//   }
-// }
+function reloadToDoList() {
+  console.log('global array', globalArray)
+  if (globalArray.length !== 0) {
+    const newArray = globalArray.map(listObj => {
+      const newList = new ToDoList(listObj.id,listObj.title, false, listObj.task);
+      console.log('new list', newList)
+      return newList;
+    });
+    globalArray = newArray;
+  }
+}
+
+
+function loadConditions() {
+  reloadPageDom();
+  reloadToDoList();
+}
+
+function reloadPageDom() {
+  if (globalArray.length !== 0) {
+    globalArray.forEach(function (item) {
+      appendListCard(item);
+    })
+  }
+}
+
+function deleteCard(e) {
+  if (e.target.classList.contains("card__footer--delete")) {
+    e.target.closest("article").remove();
+    var locatedIndex = locateIndex(e);
+    var locatedId = locateId(e);
+    globalArray[locatedIndex].deleteFromStorage(locatedId);
+  }
+}
+
+function locateId(e) {
+  var parent = e.target.closest("article");
+  var parentId = parseInt(parent.dataset.id);
+  return parentId;
+}
+
+function locateIndex(e) {
+  var parent = e.target.closest("article");
+  var parentId = parseInt(parent.dataset.id);
+  var locatedIndex = globalArray.findIndex(function (list) {
+    return list.id === parentId;
+  });
+  return locatedIndex;
+}
 
 
 // map items and append to card

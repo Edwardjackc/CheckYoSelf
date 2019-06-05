@@ -2,6 +2,7 @@
   box-sizing:border-box;
   /* border:solid 1px red; */
 }
+
 body {
   font-family: 'Open Sans', sans-serif;
   height:100vh; 
@@ -38,6 +39,16 @@ span {
   width:350px;
   margin-right:.5rem;
   padding-left:.5rem;
+}
+
+.header__div--inputs {
+  display:flex;
+  height:50px;
+}
+
+.header__img {
+  height: 50px;
+  background-color: #f3f6f7;
 }
 
 /********* Main ********/
@@ -102,11 +113,11 @@ span {
 
 /***** nav ******/
 .nav__container {
-  grid-area:navi;
-  background-color:#587a8a;
-  display:flex;
+  grid-area: navi;
+  background-color: #587a8a;
+  display: flex;
   flex-direction: column;
-  padding:30px 0px;
+  padding-top: 30px;
 }
 
 .nav__form {
@@ -124,14 +135,14 @@ span {
   border-bottom:2px #3c6577 solid;
   display:flex;
   justify-content: space-evenly;
-  min-height: 25%;
+  min-height: 150px;
   margin-bottom: 20px;
 }
 
 .nav__label {
   display:block;
   color:#c7d3d8;
-  font-size:.9em;
+  font-size:1.1em;
   margin-left:.57rem;
 }
 
@@ -143,9 +154,20 @@ span {
   width:95%;
   height:50px;
   margin-left:.51rem;
-  margin-right: .51rem;
-
 }
+
+.nav__div--append-btn {
+  width:98%;
+  display:flex;
+}
+
+.nav__input--icon {
+  width:60px;
+  background-color:#1f1f3d;
+  border:2px solid #1f1f3d;
+  height: 50px;
+}
+
 
 .nav__input--btn {
   background-color:#1f1f3d;
@@ -166,6 +188,7 @@ span {
 
 .nav__input--text {
   background-color:#ffffff;
+  margin-bottom:10px;
 }
 
 .nav__div--task-item {

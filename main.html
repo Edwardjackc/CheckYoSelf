@@ -8,16 +8,19 @@
   <link rel="stylesheet" type="text/css" media="screen" href="normalize.css">
   <link rel="stylesheet" type="text/css" media="screen" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <body>
   <header class="header__container">
     <h1>CHECK <span>YO'</span> SELF</h1>
-    <img src="images/search.svg">
-    <input class="header__input" type="text"placeholder="Search">
+    <div class="header__div--inputs"> 
+      <img class="header__img"src="images/search.svg">
+      <input class="header__input" type="text"placeholder="Search">
+    </div>
   </header>
   <main class="card__main--container"id="card__main--container">
+      <section class="card__section--message" id="card__section--message">
+        <label class="card__label--message" id="bottom__label--message" type="text">Yo</label>
+      </section>
   </main>
   <nav class="nav__container">
     <form class="nav__form nav__form--top"id="nav__form--top">
@@ -26,12 +29,14 @@
       <section class="nav__container--tasks"id="nav__container--tasks">
       </section>
       <label class="nav__label"for="nav__input--task">Task Item</label>
-      <input class="nav__input nav__input--text"id="nav__input--task"type="text">
-      <input class="nav__input--icon"id="nav__btn--task-append"type="button"disabled="false"><i class="fas fa-plus-square"></i></input>
+        <div class="nav__div--append-btn">
+          <input class="nav__input nav__input--text"id="nav__input--task"type="text">
+          <input class="nav__input--icon"id="nav__btn--task-append"type="button"disabled="false">
+        </div>
       </form>
-      <form class="nav__form nav__form--bottom">
-        <input class="nav__input nav__input--btn"id="nav__btn--list-append"type="button"disabled="false"value="Make Task List">
-        <input class="nav__input nav__input--btn"id="nav__btn-clear"type="button"value="Clear All">
+    <form class="nav__form nav__form--bottom">
+      <input class="nav__input nav__input--btn"id="nav__btn--list-append"type="button"disabled="false"value="Make Task List">
+      <input class="nav__input nav__input--btn"id="nav__btn-clear"type="button"value="Clear All">
     </form>
     <input class="nav__input nav__input--btn nav__input--btn-urgency"type="button"value="Filter by Urgency">
   </nav>
