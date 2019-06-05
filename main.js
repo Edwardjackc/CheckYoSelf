@@ -7,7 +7,6 @@ let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
 
-
 /*********** Event Listeners ***********/
 btnClearAll.addEventListener('click', clearInputs)
 btnMakeList.addEventListener('click', makeListItems);
@@ -106,7 +105,6 @@ function  makeListItems(e) {
       content: allTaskOutputs[i].innerText
     }
     tempArray.push(taskObject)
-    console.log('tempArray', tempArray)
   }
   createListObject(tempArray);
 };
@@ -123,7 +121,6 @@ function taskAppendLoop(obj) {
 
 /******Card List functions** */
 function createListObject(task) {
-  console.log('hi',task)
   if (titleInput.value && navTaskContainer.innerText) {
     var list = new ToDoList(Date.now(),titleInput.value, false, task);
     globalArray.push(list);
