@@ -4,11 +4,11 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  height:100vh; 
   display:grid;
+  font-family: 'Open Sans', sans-serif;
   grid-template-columns:30%;
   grid-template-rows:12%;
+  height:100vh; 
   grid-template-areas:
     "top top"
     "navi main"
@@ -18,8 +18,8 @@ body {
 /********** Header ****************/
 h1 {
   color:#ffffff;
-  margin-left:.5rem;
   font-size:3.0em;
+  margin-left:.5rem;
 }
 
 span {
@@ -27,18 +27,18 @@ span {
 }
 
 .header__container {
-  background-color:#1f1f3d;
-  grid-area:top;
-  display:flex;
   align-items: center;
+  background-color:#1f1f3d;
+  display:flex;
+  grid-area:top;
   justify-content: space-between;
 }
 
 .header__input {
   height:50px;
-  width:350px;
   margin-right:.5rem;
   padding-left:.5rem;
+  width:350px;
 }
 
 .header__div--inputs {
@@ -47,14 +47,14 @@ span {
 }
 
 .header__img {
-  height: 50px;
   background-color: #f3f6f7;
+  height: 50px;
 }
 
 /********* Main ********/
 .card__main--container {
-  grid-area:main;
   background-color:#f3f6f7;
+  grid-area:main;
   padding:20px;
 }
 
@@ -67,11 +67,11 @@ span {
 }
 
 .card__header {
-  display:flex;
-  color:#1f1f3d;
-  justify-content: flex-start;
   border-bottom:1px solid #c7d3d8;
+  color:#1f1f3d;
+  display:flex;
   height:15%;
+  justify-content: flex-start;
 }
 
 .card__h3--title {
@@ -84,19 +84,19 @@ span {
 }
 
 .card__paragraph {
-  margin:5px;
+  align-items: flex-start;
   display:flex;
   flex-direction: column;
-  align-items: flex-start;
+  margin:5px;
 }
 
 .card__div--task { 
-  width:100%;
-  height: 20%;
-  display:flex;
   align-items: center;
+  display:flex;
+  height: 20%;
   justify-content: flex-start;
   margin:1% 2%;
+  width:100%;
 }
 
 .card__paragraph--text {
@@ -106,20 +106,19 @@ span {
 .card__img--task {
   height:20px;
   margin-right:.6rem;
-
 }
 
 .card__footer {
   border-top:1px solid #c7d3d8;
   display:flex;
-  justify-content: space-between;
   height:25%;
+  justify-content: space-between;
   padding:0px 5px;
 }
 
 .card__footer--images {
-  width:25px;
   margin-bottom:5px;
+  width:25px;
 }
 
 .card__footer--delete {
@@ -127,30 +126,29 @@ span {
 }
 
 .card__paragraph-btns {
-  font-size: .8em;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   color:#3c6577;
+  display: flex;
+  flex-direction: column;
+  font-size: .8em;
 }
 
 .card__label--message {
+  color:#ffc30c;
   font-size: 2em;
   font-weight: 800;
-  color:#ffc30c;
 }
 
 /***** nav ******/
 .nav__container {
-  grid-area: navi;
   background-color: #587a8a;
   display: flex;
   flex-direction: column;
+  grid-area: navi;
   padding-top: 30px;
 }
 
 .nav__form {
-  /* display:flex; */
   flex-direction: column;
 }
 
@@ -164,13 +162,13 @@ span {
   border-bottom:2px #3c6577 solid;
   display:flex;
   justify-content: space-evenly;
-  min-height: 150px;
   margin-bottom: 20px;
+  min-height: 150px;
 }
 
 .nav__label {
-  display:block;
   color:#c7d3d8;
+  display:block;
   font-size:1.1em;
   margin-left:.57rem;
 }
@@ -179,10 +177,10 @@ span {
   align-items: center;
   background-color:#ffffff;
   border:#1f1f3d solid 2px;
-  padding-left:.5rem;
-  width:95%;
   height:50px;
   margin-left:.51rem;
+  padding-left:.5rem;
+  width:95%;
 }
 
 .nav__input--icon {
@@ -192,15 +190,15 @@ span {
 }
 
 .nav__div--append-btn {
-  width:98%;
   display:flex;
+  width:98%;
 }
 
 .nav__input--icon {
-  width:60px;
   background-color:#1f1f3d;
   border:2px solid #1f1f3d;
   height: 50px;
+  width:60px;
 }
 
 
@@ -235,8 +233,8 @@ span {
 
 .nav__input--task-delete {
   height:22px;
-  width:22px;
   margin-right:.5rem;
+  width:22px;
 }
 
 @media screen and (max-width: 800px) {
@@ -251,17 +249,17 @@ span {
 
 @media screen and (max-width: 600px) {
   body {
-  display:block;
+    display:block;
   }
 
   h1 {
-  font-size:2.4em;
-  margin-left:0rem;
+    font-size:2.4em;
+    margin-left:0rem;
   }
 
   .card__main--container {
-      display: flex;
-      justify-content: center;
+    display: flex;
+    justify-content: center;
   }
 
   .header__container{
@@ -271,17 +269,17 @@ span {
   }
 
   .header__input {
-    width:100%;
     align-items: center;
     margin-right:0rem;
+    width:100%;
   }
 
   .header__div--inputs {
-  margin:.9rem;
+    margin:.9rem;
   }
 
   .nav__input--btn-urgency {
-  margin-bottom:1rem;
+    margin-bottom:1rem;
   }
 
   .card__header {
@@ -289,8 +287,8 @@ span {
   }
 
   .card__article--container {
-  min-width: 320px;
-  max-width: 600px;
+    min-width: 320px;
+    max-width: 600px;
   }
 }
 
