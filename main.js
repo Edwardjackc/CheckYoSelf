@@ -34,11 +34,7 @@ function appendListCard(list) {
       </section>
       <footer class="card__footer">
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
-        src=${
-          list.urgent === true
-            ? "images/urgent-active.svg"
-            : "images/urgent.svg"
-        }>URGENT</p>
+        src="images/urgent.svg">URGENT</p>
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
       src="images/delete.svg"}>DELETE</p>
       </footer>
@@ -192,6 +188,13 @@ function locateIndex(e) {
 function markAsUrgent(e) {
   if (e.target.classList.contains('card__footer--urgent')) {
   var locatedIndex = locateIndex(e);
-  globalArray[locatedIndex].urgent ? globalArray[locatedIndex].urgent = false : globalArray[locatedIndex].urgent = true;
-  } 
+    globalArray[locatedIndex].urgent = !globalArray[locatedIndex].urgent 
+  if(globalArray[locatedIndex].urgent === true) {
+    e.target.setAttribute('src', 'images/urgent-active.svg');
+    e.target.closest('article').style.background='#ffe89d'
+  }else {
+    e.target.setAttribute('src', 'images/urgent.svg');
+    e.target.closest('article').style.background ='#ffffff'
+    }
+  }  
 }
