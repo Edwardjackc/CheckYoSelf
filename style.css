@@ -90,13 +90,23 @@ span {
   align-items: flex-start;
 }
 
+.card__div--task { 
+  width:100%;
+  height: 20%;
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin:1% 2%;
+}
+
 .card__paragraph--text {
   font-size:1em;
 }
 
 .card__img--task {
   height:20px;
-  width:20px;
+  margin-right:.6rem;
+
 }
 
 .card__footer {
@@ -109,6 +119,25 @@ span {
 
 .card__footer--images {
   width:25px;
+  margin-bottom:5px;
+}
+
+.card__footer--delete {
+  width:30px;
+}
+
+.card__paragraph-btns {
+  font-size: .8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color:#3c6577;
+}
+
+.card__label--message {
+  font-size: 2em;
+  font-weight: 800;
+  color:#ffc30c;
 }
 
 /***** nav ******/
@@ -154,6 +183,12 @@ span {
   width:95%;
   height:50px;
   margin-left:.51rem;
+}
+
+.nav__input--icon {
+  background-color: #1f1f3d;
+  color:#ffffff;
+  font-size:2em;
 }
 
 .nav__div--append-btn {
@@ -203,3 +238,59 @@ span {
   width:22px;
   margin-right:.5rem;
 }
+
+@media screen and (max-width: 800px) {
+  h1{
+    font-size: 2.5em;
+  }
+
+  .header__input {
+    width:220px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+  display:block;
+  }
+
+  h1 {
+  font-size:2.4em;
+  margin-left:0rem;
+  }
+
+  .card__main--container {
+      display: flex;
+      justify-content: center;
+  }
+
+  .header__container{
+    display:block;
+    padding:.2rem;
+    text-align: center;
+  }
+
+  .header__input {
+    width:100%;
+    align-items: center;
+    margin-right:0rem;
+  }
+
+  .header__div--inputs {
+  margin:.9rem;
+  }
+
+  .nav__input--btn-urgency {
+  margin-bottom:1rem;
+  }
+
+  .card__header {
+    height:20%;
+  }
+
+  .card__article--container {
+  min-width: 320px;
+  max-width: 600px;
+  }
+}
+
