@@ -14,7 +14,8 @@ btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
 navTaskContainer.addEventListener('click', deleteCreatedTaskItem);
-cardContainer.addEventListener("click", deleteCard);
+cardContainer.addEventListener('click', deleteCard);
+cardContainer.addEventListener('click', markAsUrgent);
 this.addEventListener('load', loadConditions);
 
 
@@ -56,13 +57,12 @@ function appendTaskItem() {
   `+ navTaskContainer.innerHTML;
 }
 
-function clearDisplayMessage(e) {
-  e.preventDefault()
-  var hiddenMessage = document.querySelector("#main__label--message");
-  if (bottomContainer.contains(hiddenMessage)) {
-    bottomContainer.removeChild(hidden);
+function clearDisplayMessage() {
+  var hiddenMessage = document.querySelector('#card__label--message');
+  if (cardContainer.contains(hiddenMessage)) {
+    hiddenMessage.remove();
   }
-} 
+}
 
 /**********  Delete functions  **********/
 function deleteCreatedTaskItem(e) {
@@ -98,7 +98,6 @@ function validateNavInputs() {
   validateInputs(btnMakeList, titleInput && taskInput);
 }
 
-
 /********** Item functions ************/
 
 function  makeListItems(e) {
@@ -131,12 +130,11 @@ function createListObject(task) {
   console.log('hi',task)
   if (titleInput.value && navTaskContainer.innerText) {
     var list = new ToDoList(Date.now(),titleInput.value, false, task);
-    console.log('list', list)
-
     globalArray.push(list);
     list.saveToStorage(globalArray);
     navTaskContainer.innerHTML = null;
     appendListCard(list);
+    clearDisplayMessage();
     clearFormInput(navFormInputs);
   }
   return list 
@@ -146,14 +144,13 @@ function reloadToDoList() {
   console.log('global array', globalArray)
   if (globalArray.length !== 0) {
     const newArray = globalArray.map(listObj => {
-      const newList = new ToDoList(listObj.id,listObj.title, false, listObj.task);
+      const newList = new ToDoList(listObj.id,listObj.title, listObj.urgent, listObj.task);
       console.log('new list', newList)
       return newList;
     });
     globalArray = newArray;
   }
 }
-
 
 function loadConditions() {
   reloadPageDom();
@@ -164,6 +161,7 @@ function reloadPageDom() {
   if (globalArray.length !== 0) {
     globalArray.forEach(function (item) {
       appendListCard(item);
+      clearDisplayMessage();
     })
   }
 }
@@ -174,6 +172,7 @@ function deleteCard(e) {
     var locatedIndex = locateIndex(e);
     var locatedId = locateId(e);
     globalArray[locatedIndex].deleteFromStorage(locatedId);
+    clearDisplayMessage();
   }
 }
 
@@ -192,13 +191,9 @@ function locateIndex(e) {
   return locatedIndex;
 }
 
-
-// map items and append to card
-// function based on dom interations that returns an array of the adjusted items then pushes to
-// storage 
-
-
-// Goals, exceptional Comp, JS, HTML, CSS, and advance beginner func 
-//Monday --- card appending with correct style of items
-// --------- card persisting 
-// --------- 
+function markAsUrgent(e) {
+  if (e.target.classList.contains('card__footer--urgent')) {
+  var locatedIndex = locateIndex(e);
+  globalArray[locatedIndex].urgent ? globalArray[locatedIndex].urgent = false : globalArray[locatedIndex].urgent = true;
+  } 
+}

@@ -111,6 +111,12 @@ span {
   width:25px;
 }
 
+.card__label--message {
+  font-size: 2em;
+  font-weight: 800;
+  color:#ffc30c;
+}
+
 /***** nav ******/
 .nav__container {
   grid-area: navi;
