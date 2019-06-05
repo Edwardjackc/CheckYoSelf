@@ -255,6 +255,10 @@ span {
   margin-bottom:1rem;
   }
 
+  .card__header {
+    height:20%;
+  }
+
   .card__article--container {
   min-width: 320px;
   max-width: 600px;
