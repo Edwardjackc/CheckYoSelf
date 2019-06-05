@@ -119,6 +119,19 @@ span {
 
 .card__footer--images {
   width:25px;
+  margin-bottom:5px;
+}
+
+.card__footer--delete {
+  width:30px;
+}
+
+.card__paragraph-btns {
+  font-size: .8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color:#3c6577;
 }
 
 .card__label--message {

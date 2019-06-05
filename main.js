@@ -33,14 +33,14 @@ function appendListCard(list) {
         </p>
       </section>
       <footer class="card__footer">
-      <input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
+      <p class="card__paragraph-btns"><input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
         src=${
           list.urgent === true
             ? "images/urgent-active.svg"
             : "images/urgent.svg"
-        }>
-      <input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
-      src="images/delete.svg"}>
+        }>URGENT</p>
+      <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
+      src="images/delete.svg"}>DELETE</p>
       </footer>
     </article>` + cardContainer.innerHTML;
 }
