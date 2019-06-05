@@ -7,7 +7,7 @@ Check Yo'Self focuses on adding tasks to a checklist that helps organize ones th
 [Repo](https://edwardjackc.github.io/CheckYoSelf/)
 
 ## Screen shots
-![desktop image](/images/desktop.pdf)
+![desktop image](/images/desktop.png)
 ![mobile image](/images/mobile.png)
 
 ## Comp screenshots 
