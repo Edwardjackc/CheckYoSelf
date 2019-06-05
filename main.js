@@ -118,9 +118,9 @@ function  makeListItems(e) {
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
-    string += `<input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
+    string += `<div class="card__div--task"><input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
       obj.task[i].content
-      }</p></input>`;
+      }</p></input></div>`;
   }
   return string
 };
