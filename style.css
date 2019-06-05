@@ -1,6 +1,5 @@
 * {
   box-sizing:border-box;
-  /* border:solid 1px red; */
 }
 
 body {
@@ -261,6 +260,7 @@ span {
   .card__main--container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
 
   .header__container{
