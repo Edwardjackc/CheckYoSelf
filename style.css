@@ -185,6 +185,12 @@ span {
   margin-left:.51rem;
 }
 
+.nav__input--icon {
+  background-color: #1f1f3d;
+  color:#ffffff;
+  font-size:2em;
+}
+
 .nav__div--append-btn {
   width:98%;
   display:flex;

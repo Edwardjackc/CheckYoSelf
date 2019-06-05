@@ -141,11 +141,9 @@ function createListObject(task) {
 };
 
 function reloadToDoList() {
-  console.log('global array', globalArray)
   if (globalArray.length !== 0) {
     const newArray = globalArray.map(listObj => {
       const newList = new ToDoList(listObj.id,listObj.title, listObj.urgent, listObj.task);
-      console.log('new list', newList)
       return newList;
     });
     globalArray = newArray;
