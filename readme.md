@@ -1,9 +1,9 @@
-#Check Yo Self 
+# Check Yo Self 
 
 Check Yo'Self is a task oriented persons best friend. Using Javascript,css,html and with a focus on local storage and dom interface.
 Check Yo'Self focuses on adding tasks to a checklist that helps organize ones thoughts.
 
-##Link to Repo
+## Link to Repo
 [Repo](https://edwardjackc.github.io/CheckYoSelf/)
 
 ## Screen shots
