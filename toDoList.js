@@ -6,7 +6,6 @@ class ToDoList{
     this.task = task || []
   }
 
-//pass global array as a parameter 
   saveToStorage() {
     var stringedTasks = JSON.stringify(globalArray);
     localStorage.setItem('savedListArr', stringedTasks);

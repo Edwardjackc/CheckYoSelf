@@ -64,6 +64,7 @@ span {
   display:flex;
   flex-flow: column;
   max-width: 350px;
+  margin-bottom:1rem;
 }
 
 .card__header {
