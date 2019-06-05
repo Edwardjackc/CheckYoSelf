@@ -8,13 +8,14 @@ let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
 
 /*********** Event Listeners ***********/
-btnClearAll.addEventListener('click', clearInputs)
+btnClearAll.addEventListener('click', clearInputs);
 btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
 navTaskContainer.addEventListener('click', deleteCreatedTaskItem);
 cardContainer.addEventListener('click', deleteCard);
 cardContainer.addEventListener('click', markAsUrgent);
+cardContainer.addEventListener('click', checkTask);
 this.addEventListener('load', loadConditions);
 
 
@@ -73,6 +74,22 @@ function validateInputs(button, input) {
   button.disabled = input.value ? false : true;
 }
 
+/*** Locate functions *****/
+function locateId(e) {
+  var parent = e.target.closest("article");
+  var parentId = parseInt(parent.dataset.id);
+  return parentId;
+}
+
+function locateIndex(e) {
+  var parent = e.target.closest("article");
+  var parentId = parseInt(parent.dataset.id);
+  var locatedIndex = globalArray.findIndex(function(list) {
+    return list.id === parentId;
+  });
+  return locatedIndex;
+}
+
 /******** Clear Functions *********/
 function clearFormInput(form) {
   form.reset()
@@ -119,7 +136,7 @@ function taskAppendLoop(obj) {
   return string
 };
 
-/******Card List functions** */
+/****** Card List functions ****/
 function createListObject(task) {
   if (titleInput.value && navTaskContainer.innerText) {
     var list = new ToDoList(Date.now(),titleInput.value, false, task);
@@ -167,21 +184,6 @@ function deleteCard(e) {
   }
 }
 
-function locateId(e) {
-  var parent = e.target.closest("article");
-  var parentId = parseInt(parent.dataset.id);
-  return parentId;
-}
-
-function locateIndex(e) {
-  var parent = e.target.closest("article");
-  var parentId = parseInt(parent.dataset.id);
-  var locatedIndex = globalArray.findIndex(function (list) {
-    return list.id === parentId;
-  });
-  return locatedIndex;
-}
-
 function markAsUrgent(e) {
   if (e.target.classList.contains('card__footer--urgent')) {
   var locatedIndex = locateIndex(e);
@@ -195,3 +197,12 @@ function markAsUrgent(e) {
     }
   }  
 }
+
+function checkTask(e) {
+  e.preventDefault()
+  if (e.target) {
+      e.target.setAttribute('src', 'images/checkbox-active.svg')
+    }else{
+      e.target.setAttribute('src', 'images/checkbox.svg')
+    }
+  }
