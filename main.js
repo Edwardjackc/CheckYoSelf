@@ -23,7 +23,9 @@ var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
 function appendListCard(list) {
   cardContainer.innerHTML =
-    `<article class="card__article--container"data-id=${list.id}>
+    `<article class=${
+      list.urgent ? "card__article--container--active" : "card__article--container"
+    } data-id=${list.id}>
       <header class="card__header">
         <h3 class="card__h3--title">${list.title}</h3>
       </header>
@@ -33,7 +35,9 @@ function appendListCard(list) {
       </section>
       <footer class="card__footer">
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
-        src= ${list.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'}>URGENT</p>
+        src= ${
+          list.urgent ? "images/urgent-active.svg" : "images/urgent.svg"
+        }>URGENT</p>
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
       src="images/delete.svg"}>DELETE</p>
       </footer>
