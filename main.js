@@ -6,7 +6,6 @@ let btnClearAll = document.querySelector('#nav__btn-clear');
 let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
-let btnDeleteCard = document.querySelector('#card__delete--btn');
 
 /*********** Event Listeners ***********/
 
@@ -92,37 +91,77 @@ function deleteCreatedTaskItem(e) {
 // }
 
 function deleteCard(e) {
-  if (e.target.classList.contains('card__img--task')) {
-  const foundCard = locateCard(e)
-  const foundCardArr = foundCard.task
-  console.log('array', foundCardArr)
-  const filterConditionArray = foundCardArr.filter(task => task.checked === true)
-  if (filterConditionArray.length === foundCardArr.length) {
-    deleteCardBtnToggle(e);
-    }
-  }
+  var foundCard = locateCard(e);
+  var itemIndex = locateIndex(e);
+  var foundCardArr = foundCard.task
+  filterCondition = foundCardArr.filter(task => task.checked === false)
+  if (filterCondition.length === 0) {
+    deleteCardBtnToggle(e)
+  } 
 }
 
-function deleteCardfromStorage(e) { 
-  const locatedIndex = locateIndex(e);
-  foundCard.deleteFromStorage(locatedIndex, globalArray);
-}
+// function deleteCard(e) {
+//   var foundCard = locateCard(e);
+//   var itemIndex = locateIndex(e);
+//   var foundCardArr = foundCard.task
+//   filterCondition = foundCardArr.filter(task => task.checked === false)
+//   if (filterCondition.length === 0) {
+//     e.target.closest('article').remove();
+//     foundCard.deleteFromStorage(itemIndex, globalArray);
+//   }
+// }
+
+  // function removeCard(target) {
+  //   var listIndex = getListIndex(target)
+  //   var card = reinstateLists(listIndex)
+  //   var unchecked = card.tasks.filter(item => item.done === false)
+  //   if (unchecked.length === 0) {
+  //     target.closest('article').remove();
+  //     card.deleteFromStorage(listIndex);
+  //   } 
+  // }
+// function deleteCard(e) {
+//   if (e.target.classList.contains('card__img--task')) {
+//   const foundCard = locateCard(e)
+//   const foundCardArr = foundCard.task
+//   console.log('array', foundCardArr)
+//   var filterConditionArray = foundCardArr.filter(task => task.checked === true)
+//   if (filterConditionArray.length === foundCardArr.length) {
+//     deleteCardBtnToggle(e);
+//     }
+//   }
+// }
 
 function deleteCardBtnToggle(e)  {
-  var targetBtn = e.target.classList.contains('card__footer--delete')
-  targetBtn ? (targetBtn.disabled = false) : (targetBtn.disabled = true);
-  }
-
+  var targetCard = e.target.closest('article');
+  var targetBtn = targetCard.lastElementChild.lastElementChild.childNodes[0]
+  targetBtn.disabled = targetBtn.disabled  ?  false : true;
+}
 
 function deleteCardFromDom(e) {
-    console.log(e)
+  const locatedIndex = locateIndex(e);
+  // var targetCard = e.target.closest("article");
+  // var targetBtn = targetCard.lastElementChild.lastElementChild.childNodes[0];
   if (e.target.classList.contains('card__footer--delete')) {
     e.target.closest("article").remove();
-    const locatedIndex = locateIndex(e);
-    foundCard.deleteFromStorage(locatedIndex, globalArray);
-    clearDisplayMessage();
-  }
+  foundCard.deleteFromStorage(locatedIndex, globalArray);
+  clearDisplayMessage();
 }
+}
+// function deleteCardFromDom(e) {
+//     console.log(e)
+//   if (e.target.classList.contains('card__footer--delete')) {
+//     e.target.closest("article").remove();
+//     const locatedIndex = locateIndex(e);
+//     foundCard.deleteFromStorage(locatedIndex, globalArray);
+//     clearDisplayMessage();
+//   }
+// }
+
+// function deleteCardFromStorage(e) {
+//   const locatedIndex = locateIndex(e);
+//   foundCard.deleteFromStorage(locatedIndex, globalArray);
+// }
 
 /****  Validation functions ********/
 
@@ -292,6 +331,7 @@ function cardClickEvents(e) {
   deleteCard(e);
   markAsUrgent(e);
   findTaskItem(e);
+  deleteCardFromDom();
 }
 
 function loadConditions() {
