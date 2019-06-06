@@ -33,7 +33,7 @@ function appendListCard(list) {
       </section>
       <footer class="card__footer">
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
-        src="images/urgent.svg">URGENT</p>
+        src= ${list.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'}>URGENT</p>
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
       src="images/delete.svg"}>DELETE</p>
       </footer>
@@ -112,6 +112,13 @@ function locatedTask(e) {
     return taskId;
 }
 
+function locateCard(e) {
+  debugger;
+  const listId = locateId(e)
+  const returnListObj =globalArray.find(list => list.id === listId)
+  return returnListObj
+}
+
 function locateIndex(e) {
   var parent = e.target.closest('article');
   var parentId = parseInt(parent.dataset.id);
@@ -174,15 +181,16 @@ function taskAppendLoop(obj) {
 };
 
 function findTaskItem(e) {
-  const locatedCardId = locateId(e);
-  const cardList = globalArray.find(list => list.id === locatedCardId);
-  const locatedTaskId = locatedTask(e);
-  const taskItem =  cardList.task.find(task => task.id === locatedTaskId);
-  taskItem.checked = !taskItem.checked
-  checkTask(taskItem, e);
-  cardList.saveToStorage(globalArray)
+  if (e.target.classList.contains('card__div--task')) {
+    const locatedCardId = locateId(e);
+    const cardList = globalArray.find(list => list.id === locatedCardId);
+    const locatedTaskId = locatedTask(e);
+    const taskItem =  cardList.task.find(task => task.id === locatedTaskId);
+    taskItem.checked = !taskItem.checked
+    checkTask(taskItem, e);
+    cardList.saveToStorage(globalArray)
+  }
 }
-
 /****** Card List functions ****/
 
 // function createListObject(task) {
@@ -233,14 +241,13 @@ function reloadPageDom() {
     })
   }
 }
-
+// two differnt classes , uses ternary to swap between in card append based on urgent or not
 //locateID to find card to mark Urgent on dom based on urgent value 
 function markAsUrgent(e) {
   if (e.target.classList.contains('card__footer--urgent')) {
-  var locatedIndex = locateIndex(e);
-    globalArray[locatedIndex].urgent = !globalArray[locatedIndex].urgent 
-    localStorage[locatedIndex].updateTask(globalArray)
-  if(globalArray[locatedIndex].urgent === true) {
+    const locatedCard = locateCard(e)
+    locatedCard.updateTask(globalArray)
+  if(locatedCard.urgent === true) {
     e.target.setAttribute('src', 'images/urgent-active.svg');
     e.target.closest('article').style.background='#ffe89d'
   }else {
@@ -278,9 +285,8 @@ function loadConditions() {
 
 // do masonary layout ,
 //*** */ fix card mobile layout , 
-//card main flex column.
+//card main flex column. x
 // check == true or false,x
-// add property to x
 // persist task urgent and task 
-// pass global array through to methods  
+// pass global array through to methods  x
 //remove delete from top input after everything 
