@@ -143,7 +143,15 @@ function deleteCard(e) {
   //   }
 
 
-/
+// function deleteCardBtnToggle(e)  {
+//   debugger;
+//   if(e.target.closest('article')) {
+//   var targetBtn = e.target.closest('card__delete--btn')
+//   var targetBtnNodes = targetCard.lastElementChild.lastElementChild.childNodes[0]
+//   var targetBtn = targetBtnNodes
+//   targetBtn.disabled = targetBtn.disabled  ?  false : true;
+//   }
+// }
 
 // function deleteCardFromDom(e) {
 //   const locatedIndex = locateIndex(e);
