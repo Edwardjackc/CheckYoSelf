@@ -74,31 +74,32 @@ function deleteCreatedTaskItem(e) {
   }
 }
 
-// function deleteCard(e) {
-//   if (e.target.classList.contains("card__footer--delete" )) {
-//     debugger;
-//     const foundCard = locateCard(e)
-//     const foundCardArr = foundCard.task
-//     filterCondition = foundCardArr.filter(task => task.checked === true)
-//     filterCondition === foundCardArr.length ?
-//     btnDeleteCard.disabled = false 
-//     : btnDeleteCard.disabled = true;
-//     e.target.closest("article").remove();
-//     const locatedIndex = locateIndex(e);
-//     foundCard.deleteFromStorage(locatedIndex,globalArray);
-//     clearDisplayMessage();
-//   }
-// }
-
 function deleteCard(e) {
-  var foundCard = locateCard(e);
-  var itemIndex = locateIndex(e);
-  var foundCardArr = foundCard.task
-  filterCondition = foundCardArr.filter(task => task.checked === false)
-  if (filterCondition.length === 0) {
-    deleteCardBtnToggle(e)
-  } 
+  if (e.target.classList.contains("card__footer--delete" )) {
+    debugger;
+    const foundCard = locateCard(e)
+    // const foundCardArr = foundCard.task
+    // filterCondition = foundCardArr.filter(task => task.checked === true)
+    // filterCondition === foundCardArr.length ?
+    // btnDeleteCard.disabled = false 
+    // : btnDeleteCard.disabled = true;
+    e.target.closest("article").remove();
+    const locatedIndex = locateIndex(e);
+    foundCard.deleteFromStorage(locatedIndex,globalArray);
+    clearDisplayMessage();
+  }
 }
+
+
+// function deleteCard(e) {
+//   var foundCard = locateCard(e);
+//   var itemIndex = locateIndex(e);
+//   var foundCardArr = foundCard.task
+//   filterCondition = foundCardArr.filter(task => task.checked === false)
+//   if (filterCondition.length === 0) {
+//     deleteCardBtnToggle(e)
+//   } 
+// }
 
 // function deleteCard(e) {
 //   var foundCard = locateCard(e);
@@ -127,27 +128,34 @@ function deleteCard(e) {
 //   console.log('array', foundCardArr)
 //   var filterConditionArray = foundCardArr.filter(task => task.checked === true)
 //   if (filterConditionArray.length === foundCardArr.length) {
-//     deleteCardBtnToggle(e);
-//     }
+    
+//   }
 //   }
 // }
+  // function deleteCard(e) {
+  //   if (e.target.classList.contains('card__footer--delete')) {
+  //     const foundCard = locateCard(e)
+  //     const foundCardArr = foundCard.task
+  //     var filterConditionArray = foundCardArr.filter(task => task.checked === true)
+  //     if (filterConditionArray.length === foundCardArr.length) {
 
-function deleteCardBtnToggle(e)  {
-  var targetCard = e.target.closest('article');
-  var targetBtn = targetCard.lastElementChild.lastElementChild.childNodes[0]
-  targetBtn.disabled = targetBtn.disabled  ?  false : true;
-}
+  //     }
+  //   }
 
-function deleteCardFromDom(e) {
-  const locatedIndex = locateIndex(e);
+
+/
+
+// function deleteCardFromDom(e) {
+//   const locatedIndex = locateIndex(e);
   // var targetCard = e.target.closest("article");
   // var targetBtn = targetCard.lastElementChild.lastElementChild.childNodes[0];
-  if (e.target.classList.contains('card__footer--delete')) {
-    e.target.closest("article").remove();
-  foundCard.deleteFromStorage(locatedIndex, globalArray);
-  clearDisplayMessage();
-}
-}
+  // if (e.target.classList.contains('card__footer--delete')) {
+  //   e.target.closest("article").remove();
+  // foundCard.deleteFromStorage(locatedIndex, globalArray);
+  // clearDisplayMessage();
+// }
+// }
+
 // function deleteCardFromDom(e) {
 //     console.log(e)
 //   if (e.target.classList.contains('card__footer--delete')) {
@@ -158,7 +166,9 @@ function deleteCardFromDom(e) {
 //   }
 // }
 
+
 // function deleteCardFromStorage(e) {
+//   deleteCard(foundCard)
 //   const locatedIndex = locateIndex(e);
 //   foundCard.deleteFromStorage(locatedIndex, globalArray);
 // }
@@ -184,7 +194,6 @@ function locatedTask(e) {
 }
 
 function locateCard(e) {
-  debugger;
   const listId = locateId(e)
   const returnListObj =globalArray.find(list => list.id === listId)
   return returnListObj
@@ -211,7 +220,7 @@ function clearInputs() {
 
 function runTaskCreationLoop() {
   appendTaskItem();
-  clearFormInput(navFormInputs);
+  taskInput.value =""
   validateInputs(btnAppendTask,taskInput);
 }
 
@@ -318,10 +327,8 @@ function markAsUrgent(e) {
 function checkTask(task, e) {
     if (task.checked) {
       e.target.setAttribute('src', 'images/checkbox-active.svg')
-      console.log('chould be tru', task.checked)
     } else {
       e.target.setAttribute('src', 'images/checkbox.svg')
-      console.log("chould be false", task.checked);
     }
   }
 

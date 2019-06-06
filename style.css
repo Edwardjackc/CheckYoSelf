@@ -7,7 +7,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   grid-template-columns:30%;
   grid-template-rows:12%;
-  height:100vh; 
+  height:100vh;
   grid-template-areas:
     "top top"
     "navi main"
@@ -54,7 +54,9 @@ span {
 .card__main--container {
   background-color:#f3f6f7;
   grid-area:main;
-  padding:20px;
+  padding:18px;
+  column-count: 2;
+  column-gap:.5em;
 }
 
 .card__article--container {
@@ -63,7 +65,8 @@ span {
   color:#1f1f3d;
   display:flex;
   flex-flow: column;
-  max-width: 350px;
+  break-inside:avoid;
+  width:100%;
   margin-bottom:1rem;
 }
 
@@ -73,7 +76,7 @@ span {
   color:#1f1f3d;
   display:flex;
   flex-flow: column;
-  max-width: 350px;
+  max-width: 400px;
   margin-bottom:1rem;
 }
 
