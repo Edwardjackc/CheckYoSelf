@@ -24,7 +24,9 @@ var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 function appendListCard(list) {
   cardContainer.innerHTML =
     `<article class=${
-      list.urgent ? "card__article--container--active" : "card__article--container"
+      list.urgent
+        ? "card__article--container--active"
+        : "card__article--container"
     } data-id=${list.id}>
       <header class="card__header">
         <h3 class="card__h3--title">${list.title}</h3>
@@ -38,7 +40,7 @@ function appendListCard(list) {
         src= ${
           list.urgent ? "images/urgent-active.svg" : "images/urgent.svg"
         }>URGENT</p>
-      <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
+      <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" disabled="true" type="image"  alt="Card delete button"
       src="images/delete.svg"}>DELETE</p>
       </footer>
     </article>` + cardContainer.innerHTML;
@@ -74,27 +76,102 @@ function deleteCreatedTaskItem(e) {
 
 function deleteCard(e) {
   if (e.target.classList.contains("card__footer--delete" )) {
-    let filterCondition = 
+    debugger;
+    const foundCard = locateCard(e)
+    // const foundCardArr = foundCard.task
+    // filterCondition = foundCardArr.filter(task => task.checked === true)
+    // filterCondition === foundCardArr.length ?
+    // btnDeleteCard.disabled = false 
+    // : btnDeleteCard.disabled = true;
     e.target.closest("article").remove();
-    var locatedIndex = locateIndex(e);
-    var locatedId = locateId(e);
-    globalArray[locatedIndex].deleteFromStorage(locatedId,globalArray);
+    const locatedIndex = locateIndex(e);
+    foundCard.deleteFromStorage(locatedIndex,globalArray);
     clearDisplayMessage();
   }
 }
 
 
-// locate the card,
-// drill down to task checked property
-// check for true 
-// filter true
-// return array minus true values 
-// conditional 
-// delete from dom 
-// update global array 
-// save to storage.
+// function deleteCard(e) {
+//   var foundCard = locateCard(e);
+//   var itemIndex = locateIndex(e);
+//   var foundCardArr = foundCard.task
+//   filterCondition = foundCardArr.filter(task => task.checked === false)
+//   if (filterCondition.length === 0) {
+//     deleteCardBtnToggle(e)
+//   } 
+// }
+
+// function deleteCard(e) {
+//   var foundCard = locateCard(e);
+//   var itemIndex = locateIndex(e);
+//   var foundCardArr = foundCard.task
+//   filterCondition = foundCardArr.filter(task => task.checked === false)
+//   if (filterCondition.length === 0) {
+//     e.target.closest('article').remove();
+//     foundCard.deleteFromStorage(itemIndex, globalArray);
+//   }
+// }
+
+  // function removeCard(target) {
+  //   var listIndex = getListIndex(target)
+  //   var card = reinstateLists(listIndex)
+  //   var unchecked = card.tasks.filter(item => item.done === false)
+  //   if (unchecked.length === 0) {
+  //     target.closest('article').remove();
+  //     card.deleteFromStorage(listIndex);
+  //   } 
+  // }
+// function deleteCard(e) {
+//   if (e.target.classList.contains('card__img--task')) {
+//   const foundCard = locateCard(e)
+//   const foundCardArr = foundCard.task
+//   console.log('array', foundCardArr)
+//   var filterConditionArray = foundCardArr.filter(task => task.checked === true)
+//   if (filterConditionArray.length === foundCardArr.length) {
+    
+//   }
+//   }
+// }
+  // function deleteCard(e) {
+  //   if (e.target.classList.contains('card__footer--delete')) {
+  //     const foundCard = locateCard(e)
+  //     const foundCardArr = foundCard.task
+  //     var filterConditionArray = foundCardArr.filter(task => task.checked === true)
+  //     if (filterConditionArray.length === foundCardArr.length) {
+
+  //     }
+  //   }
 
 
+/
+
+// function deleteCardFromDom(e) {
+//   const locatedIndex = locateIndex(e);
+  // var targetCard = e.target.closest("article");
+  // var targetBtn = targetCard.lastElementChild.lastElementChild.childNodes[0];
+  // if (e.target.classList.contains('card__footer--delete')) {
+  //   e.target.closest("article").remove();
+  // foundCard.deleteFromStorage(locatedIndex, globalArray);
+  // clearDisplayMessage();
+// }
+// }
+
+// function deleteCardFromDom(e) {
+//     console.log(e)
+//   if (e.target.classList.contains('card__footer--delete')) {
+//     e.target.closest("article").remove();
+//     const locatedIndex = locateIndex(e);
+//     foundCard.deleteFromStorage(locatedIndex, globalArray);
+//     clearDisplayMessage();
+//   }
+// }
+
+
+// function deleteCardFromStorage(e) {
+//   deleteCard(foundCard)
+//   const locatedIndex = locateIndex(e);
+//   foundCard.deleteFromStorage(locatedIndex, globalArray);
+// }
 
 /****  Validation functions ********/
 
@@ -117,7 +194,6 @@ function locatedTask(e) {
 }
 
 function locateCard(e) {
-  debugger;
   const listId = locateId(e)
   const returnListObj =globalArray.find(list => list.id === listId)
   return returnListObj
@@ -144,7 +220,7 @@ function clearInputs() {
 
 function runTaskCreationLoop() {
   appendTaskItem();
-  clearFormInput(navFormInputs);
+  taskInput.value =""
   validateInputs(btnAppendTask,taskInput);
 }
 
@@ -185,7 +261,7 @@ function taskAppendLoop(obj) {
 };
 
 function findTaskItem(e) {
-  if (e.target.classList.contains('card__div--task')) {
+  if (e.target.classList.contains('card__img--task')) {
     const locatedCardId = locateId(e);
     const cardList = globalArray.find(list => list.id === locatedCardId);
     const locatedTaskId = locatedTask(e);
@@ -196,19 +272,6 @@ function findTaskItem(e) {
   }
 }
 /****** Card List functions ****/
-
-// function createListObject(task) {
-//   if (titleInput.value && navTaskContainer.innerText) {
-//     var list = new ToDoList(Date.now(),titleInput.value, false, task);
-//     globalArray.push(list);
-//     list.saveToStorage(globalArray);
-//     navTaskContainer.innerHTML = null;
-//     appendListCard(list);
-//     clearDisplayMessage();
-//     clearFormInput(navFormInputs);
-//   }
-//   return list 
-// };
 
 
 function createListObject(task) {
@@ -251,10 +314,10 @@ function markAsUrgent(e) {
   if (e.target.classList.contains('card__footer--urgent')) {
     const locatedCard = locateCard(e)
     locatedCard.updateTask(globalArray)
-  if(locatedCard.urgent === true) {
+  if (locatedCard.urgent === true) {
     e.target.setAttribute('src', 'images/urgent-active.svg');
     e.target.closest('article').style.background='#ffe89d'
-  }else {
+  } else {
     e.target.setAttribute('src', 'images/urgent.svg');
     e.target.closest('article').style.background ='#ffffff'
     }
@@ -264,12 +327,8 @@ function markAsUrgent(e) {
 function checkTask(task, e) {
     if (task.checked) {
       e.target.setAttribute('src', 'images/checkbox-active.svg')
-      // e.target.classList.closest('delete-item')
-      console.log('chould be tru', task.checked)
     } else {
-
       e.target.setAttribute('src', 'images/checkbox.svg')
-      console.log("chould be false", task.checked);
     }
   }
 
@@ -279,6 +338,7 @@ function cardClickEvents(e) {
   deleteCard(e);
   markAsUrgent(e);
   findTaskItem(e);
+  deleteCardFromDom();
 }
 
 function loadConditions() {
@@ -288,9 +348,9 @@ function loadConditions() {
 
 
 // do masonary layout ,
-//*** */ fix card mobile layout , 
-//card main flex column. x
-// check == true or false,x
-// persist task urgent and task 
-// pass global array through to methods  x
-//remove delete from top input after everything 
+//*** */ fix card mobile layout, x 
+//card main flex column,  x
+// check == true or false, x
+// persist task urgent and task, x 
+// pass global array through to methods, x
+//remove delete from top input after everything, 
