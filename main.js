@@ -8,23 +8,24 @@ let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
 
 /*********** Event Listeners ***********/
+
 btnClearAll.addEventListener('click', clearInputs);
 btnMakeList.addEventListener('click', makeListItems);
 btnAppendTask.addEventListener('click', runTaskCreationLoop);
 taskInput.addEventListener('keyup', validateNavInputs);
 navTaskContainer.addEventListener('click', deleteCreatedTaskItem);
-cardContainer.addEventListener('click', deleteCard);
-cardContainer.addEventListener('click', markAsUrgent);
-cardContainer.addEventListener('click', checkTask);
+cardContainer.addEventListener('click', cardClickEvents);
 this.addEventListener('load', loadConditions);
-
 
 var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 
 /********* appending functions *********/
+
 function appendListCard(list) {
   cardContainer.innerHTML =
-    `<article class="card__article--container"data-id=${list.id}>
+    `<article class=${
+      list.urgent ? "card__article--container--active" : "card__article--container"
+    } data-id=${list.id}>
       <header class="card__header">
         <h3 class="card__h3--title">${list.title}</h3>
       </header>
@@ -34,7 +35,9 @@ function appendListCard(list) {
       </section>
       <footer class="card__footer">
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--urgent" type="image" alt="Card urgent button"
-        src="images/urgent.svg">URGENT</p>
+        src= ${
+          list.urgent ? "images/urgent-active.svg" : "images/urgent.svg"
+        }>URGENT</p>
       <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
       src="images/delete.svg"}>DELETE</p>
       </footer>
@@ -61,12 +64,37 @@ function clearDisplayMessage() {
 }
 
 /**********  Delete functions  **********/
+
 function deleteCreatedTaskItem(e) {
   e.preventDefault()
   if( e.target.closest('#nav__input--task-delete')) {
     e.target.closest('section').remove();
   }
 }
+
+function deleteCard(e) {
+  if (e.target.classList.contains("card__footer--delete" )) {
+    let filterCondition = 
+    e.target.closest("article").remove();
+    var locatedIndex = locateIndex(e);
+    var locatedId = locateId(e);
+    globalArray[locatedIndex].deleteFromStorage(locatedId,globalArray);
+    clearDisplayMessage();
+  }
+}
+
+
+// locate the card,
+// drill down to task checked property
+// check for true 
+// filter true
+// return array minus true values 
+// conditional 
+// delete from dom 
+// update global array 
+// save to storage.
+
+
 
 /****  Validation functions ********/
 
@@ -75,14 +103,28 @@ function validateInputs(button, input) {
 }
 
 /*** Locate functions *****/
+
 function locateId(e) {
-  var parent = e.target.closest("article");
+  var parent = e.target.closest('article');
   var parentId = parseInt(parent.dataset.id);
   return parentId;
 }
 
+function locatedTask(e) {
+  var divId = e.target.closest('.card__div--task')
+  var taskId = divId.dataset.id
+    return taskId;
+}
+
+function locateCard(e) {
+  debugger;
+  const listId = locateId(e)
+  const returnListObj =globalArray.find(list => list.id === listId)
+  return returnListObj
+}
+
 function locateIndex(e) {
-  var parent = e.target.closest("article");
+  var parent = e.target.closest('article');
   var parentId = parseInt(parent.dataset.id);
   var locatedIndex = globalArray.findIndex(function(list) {
     return list.id === parentId;
@@ -91,6 +133,7 @@ function locateIndex(e) {
 }
 
 /******** Clear Functions *********/
+
 function clearFormInput(form) {
   form.reset()
 }
@@ -112,14 +155,15 @@ function validateNavInputs() {
 
 /********** Item functions ************/
 
-function  makeListItems(e) {
+function  makeListItems(e,checked) {
   e.preventDefault();
   var tempArray = []
   var allTaskOutputs = document.querySelectorAll('.nav__div--task-item');
   for (var i = 0; i < allTaskOutputs.length; i++) {
     var taskObject = {
-      id:Date.now(),
-      content: allTaskOutputs[i].innerText
+      id: `1${[i]}`,
+      content: allTaskOutputs[i].innerText,
+      checked: checked || false
     }
     tempArray.push(taskObject)
   }
@@ -129,26 +173,59 @@ function  makeListItems(e) {
 function taskAppendLoop(obj) {
   var string = ""
   for (var i = 0; i < obj.task.length; i++) {
-    string += `<div class="card__div--task"><input class="card__img--task" type="image" src="images/checkbox.svg"><p class="card__paragraph--text">${
+    string += `<div class="card__div--task" data-id=${
+      obj.task[i].id
+    }><input class="card__img--task" data-id=${
+      obj.task[i].id
+      } type="image" src=${obj.task[i].checked ? 'images/checkbox-active.svg':'images/checkbox.svg'}><p class="card__paragraph--text">${
       obj.task[i].content
-      }</p></input></div>`;
+    }</p></input></div>`;
   }
   return string
 };
 
+function findTaskItem(e) {
+  if (e.target.classList.contains('card__div--task')) {
+    const locatedCardId = locateId(e);
+    const cardList = globalArray.find(list => list.id === locatedCardId);
+    const locatedTaskId = locatedTask(e);
+    const taskItem =  cardList.task.find(task => task.id === locatedTaskId);
+    taskItem.checked = !taskItem.checked
+    checkTask(taskItem, e);
+    cardList.saveToStorage(globalArray)
+  }
+}
 /****** Card List functions ****/
+
+// function createListObject(task) {
+//   if (titleInput.value && navTaskContainer.innerText) {
+//     var list = new ToDoList(Date.now(),titleInput.value, false, task);
+//     globalArray.push(list);
+//     list.saveToStorage(globalArray);
+//     navTaskContainer.innerHTML = null;
+//     appendListCard(list);
+//     clearDisplayMessage();
+//     clearFormInput(navFormInputs);
+//   }
+//   return list 
+// };
+
+
 function createListObject(task) {
   if (titleInput.value && navTaskContainer.innerText) {
-    var list = new ToDoList(Date.now(),titleInput.value, false, task);
-    globalArray.push(list);
-    list.saveToStorage(globalArray);
-    navTaskContainer.innerHTML = null;
-    appendListCard(list);
-    clearDisplayMessage();
-    clearFormInput(navFormInputs);
+    var list = new ToDoList(Date.now(), titleInput.value, false, task);  
+    helperCreateList(list)
   }
-  return list 
 };
+
+function helperCreateList(list) {
+  globalArray.push(list);
+  list.saveToStorage(globalArray);
+  navTaskContainer.innerHTML = null;
+  appendListCard(list);
+  clearDisplayMessage();
+  clearFormInput(navFormInputs);
+}
 
 function reloadToDoList() {
   if (globalArray.length !== 0) {
@@ -160,11 +237,6 @@ function reloadToDoList() {
   }
 }
 
-function loadConditions() {
-  reloadPageDom();
-  reloadToDoList();
-}
-
 function reloadPageDom() {
   if (globalArray.length !== 0) {
     globalArray.forEach(function (item) {
@@ -173,22 +245,13 @@ function reloadPageDom() {
     })
   }
 }
-
-function deleteCard(e) {
-  if (e.target.classList.contains("card__footer--delete")) {
-    e.target.closest("article").remove();
-    var locatedIndex = locateIndex(e);
-    var locatedId = locateId(e);
-    globalArray[locatedIndex].deleteFromStorage(locatedId);
-    clearDisplayMessage();
-  }
-}
-
+// two differnt classes , uses ternary to swap between in card append based on urgent or not
+//locateID to find card to mark Urgent on dom based on urgent value 
 function markAsUrgent(e) {
   if (e.target.classList.contains('card__footer--urgent')) {
-  var locatedIndex = locateIndex(e);
-    globalArray[locatedIndex].urgent = !globalArray[locatedIndex].urgent 
-  if(globalArray[locatedIndex].urgent === true) {
+    const locatedCard = locateCard(e)
+    locatedCard.updateTask(globalArray)
+  if(locatedCard.urgent === true) {
     e.target.setAttribute('src', 'images/urgent-active.svg');
     e.target.closest('article').style.background='#ffe89d'
   }else {
@@ -198,11 +261,36 @@ function markAsUrgent(e) {
   }  
 }
 
-function checkTask(e) {
-  e.preventDefault()
-  if (e.target) {
+function checkTask(task, e) {
+    if (task.checked) {
       e.target.setAttribute('src', 'images/checkbox-active.svg')
-    }else{
+      // e.target.classList.closest('delete-item')
+      console.log('chould be tru', task.checked)
+    } else {
+
       e.target.setAttribute('src', 'images/checkbox.svg')
+      console.log("chould be false", task.checked);
     }
   }
+
+/**** Event Helpers *******/
+
+function cardClickEvents(e) {
+  deleteCard(e);
+  markAsUrgent(e);
+  findTaskItem(e);
+}
+
+function loadConditions() {
+  reloadPageDom();
+  reloadToDoList();
+}
+
+
+// do masonary layout ,
+//*** */ fix card mobile layout , 
+//card main flex column. x
+// check == true or false,x
+// persist task urgent and task 
+// pass global array through to methods  x
+//remove delete from top input after everything 

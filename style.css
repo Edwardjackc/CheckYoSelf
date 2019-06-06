@@ -1,6 +1,5 @@
 * {
   box-sizing:border-box;
-  /* border:solid 1px red; */
 }
 
 body {
@@ -60,6 +59,17 @@ span {
 
 .card__article--container {
   border:1px solid #c7d3d8;
+  background:#ffffff;
+  color:#1f1f3d;
+  display:flex;
+  flex-flow: column;
+  max-width: 350px;
+  margin-bottom:1rem;
+}
+
+.card__article--container--active { 
+  border:1px solid #c7d3d8;
+  background:#ffe89d;
   color:#1f1f3d;
   display:flex;
   flex-flow: column;
@@ -261,6 +271,7 @@ span {
   .card__main--container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
 
   .header__container{

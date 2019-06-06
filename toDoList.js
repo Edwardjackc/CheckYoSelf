@@ -1,30 +1,26 @@
-class ToDoList{
-  constructor(id,title,urgent,task) {
-    this.id =id,
+class ToDoList {
+  constructor(id, title, urgent, task) {
+    this.id = id; 
     this.title = title;
     this.urgent = urgent || false;
     this.task = task || []
   }
 
-  saveToStorage() {
-    var stringedTasks = JSON.stringify(globalArray);
-    localStorage.setItem('savedListArr', stringedTasks);
-  }
+saveToStorage(globalArr) {
+  var stringedTasks = JSON.stringify(globalArr);
+  localStorage.setItem(
+  'savedListArr', stringedTasks);
+}
 
-  deleteFromStorage(locatedId) {
-    var newGlobalArray = globalArray.filter(function (list) {
-      return list.id !== locatedId;
-    });
-    globalArray = newGlobalArray;
-    var stringified = JSON.stringify(globalArray);
-    localStorage.setItem("savedListArr", stringified);
-  }
+deleteFromStorage(itemIndex,globalArr) {
+  console.log('hi')
+  globalArr.splice(itemIndex, 1);
+  this.saveToStorage(globalArr)
+}
 
-  updateToDo() {
-
-  }
-
-  updateTask() {
-
+updateTask(globalArr) {
+  debugger;
+  this.urgent = !this.urgent 
+  this.saveToStorage(globalArr)
   }
 }
