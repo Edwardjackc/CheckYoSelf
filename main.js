@@ -73,28 +73,16 @@ function deleteCreatedTaskItem(e) {
 }
 
 function deleteCard(e) {
+  debugger;
   if (e.target.classList.contains("card__footer--delete" )) {
-    let filterCondition = 
+    const foundCard = locateCard(e)
+    // let filterCondition = 
     e.target.closest("article").remove();
-    var locatedIndex = locateIndex(e);
-    var locatedId = locateId(e);
-    globalArray[locatedIndex].deleteFromStorage(locatedId,globalArray);
+    const locatedIndex = locateIndex(e);
+    foundCard.deleteFromStorage(locatedIndex,globalArray);
     clearDisplayMessage();
   }
 }
-
-
-// locate the card,
-// drill down to task checked property
-// check for true 
-// filter true
-// return array minus true values 
-// conditional 
-// delete from dom 
-// update global array 
-// save to storage.
-
-
 
 /****  Validation functions ********/
 
@@ -185,7 +173,7 @@ function taskAppendLoop(obj) {
 };
 
 function findTaskItem(e) {
-  if (e.target.classList.contains('card__div--task')) {
+  if (e.target.classList.contains('card__img--task')) {
     const locatedCardId = locateId(e);
     const cardList = globalArray.find(list => list.id === locatedCardId);
     const locatedTaskId = locatedTask(e);
