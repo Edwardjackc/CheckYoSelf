@@ -142,8 +142,27 @@ function deleteCard(e) {
   //     }
   //   }
 
+  // function deleteCard(e) {
+  //   if (e.target.classList.contains('main__article--delete-icon')) {
+  //     var index = locateIndex(e);
+  //     var tasksComplete = checkDelete(index);
+  //     var id = locateId(e);
+  //     if (tasksComplete === true) {
+  //       e.target.closest("article").remove();
+  //       globalArray = globalArray[index].deleteFromStorage(globalArray, id);
+  //     }
+  //   }
+  // };
 
-/
+// function deleteCardBtnToggle(e)  {
+//   debugger;
+//   if(e.target.closest('article')) {
+//   var targetBtn = e.target.closest('card__delete--btn')
+//   var targetBtnNodes = targetCard.lastElementChild.lastElementChild.childNodes[0]
+//   var targetBtn = targetBtnNodes
+//   targetBtn.disabled = targetBtn.disabled  ?  false : true;
+//   }
+// }
 
 // function deleteCardFromDom(e) {
 //   const locatedIndex = locateIndex(e);
@@ -338,7 +357,7 @@ function cardClickEvents(e) {
   deleteCard(e);
   markAsUrgent(e);
   findTaskItem(e);
-  deleteCardFromDom();
+  // deleteCardFromDom();
 }
 
 function loadConditions() {
