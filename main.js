@@ -142,6 +142,17 @@ function deleteCard(e) {
   //     }
   //   }
 
+  // function deleteCard(e) {
+  //   if (e.target.classList.contains('main__article--delete-icon')) {
+  //     var index = locateIndex(e);
+  //     var tasksComplete = checkDelete(index);
+  //     var id = locateId(e);
+  //     if (tasksComplete === true) {
+  //       e.target.closest("article").remove();
+  //       globalArray = globalArray[index].deleteFromStorage(globalArray, id);
+  //     }
+  //   }
+  // };
 
 // function deleteCardBtnToggle(e)  {
 //   debugger;
@@ -346,7 +357,7 @@ function cardClickEvents(e) {
   deleteCard(e);
   markAsUrgent(e);
   findTaskItem(e);
-  deleteCardFromDom();
+  // deleteCardFromDom();
 }
 
 function loadConditions() {
