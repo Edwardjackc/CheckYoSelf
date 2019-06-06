@@ -19,7 +19,6 @@ deleteFromStorage(itemIndex,globalArr) {
 }
 
 updateTask(globalArr) {
-  debugger;
   this.urgent = !this.urgent 
   this.saveToStorage(globalArr)
   }

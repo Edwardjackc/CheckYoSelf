@@ -6,6 +6,7 @@ let btnClearAll = document.querySelector('#nav__btn-clear');
 let cardContainer = document.querySelector('#card__main--container');
 let navTaskContainer = document.querySelector('#nav__container--tasks');
 let navFormInputs = document.querySelector('#nav__form--top');
+let btnDeleteCard = document.querySelector('#card__delete--btn');
 
 /*********** Event Listeners ***********/
 
@@ -24,7 +25,9 @@ var globalArray = JSON.parse(localStorage.getItem('savedListArr')) || [];
 function appendListCard(list) {
   cardContainer.innerHTML =
     `<article class=${
-      list.urgent ? "card__article--container--active" : "card__article--container"
+      list.urgent
+        ? "card__article--container--active"
+        : "card__article--container"
     } data-id=${list.id}>
       <header class="card__header">
         <h3 class="card__h3--title">${list.title}</h3>
@@ -38,7 +41,7 @@ function appendListCard(list) {
         src= ${
           list.urgent ? "images/urgent-active.svg" : "images/urgent.svg"
         }>URGENT</p>
-      <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" type="image"  alt="Card delete button"
+      <p class="card__paragraph-btns"><input class="card__footer--images card__footer--delete" id="card__delete--btn" disabled="true" type="image"  alt="Card delete button"
       src="images/delete.svg"}>DELETE</p>
       </footer>
     </article>` + cardContainer.innerHTML;
@@ -72,14 +75,51 @@ function deleteCreatedTaskItem(e) {
   }
 }
 
+// function deleteCard(e) {
+//   if (e.target.classList.contains("card__footer--delete" )) {
+//     debugger;
+//     const foundCard = locateCard(e)
+//     const foundCardArr = foundCard.task
+//     filterCondition = foundCardArr.filter(task => task.checked === true)
+//     filterCondition === foundCardArr.length ?
+//     btnDeleteCard.disabled = false 
+//     : btnDeleteCard.disabled = true;
+//     e.target.closest("article").remove();
+//     const locatedIndex = locateIndex(e);
+//     foundCard.deleteFromStorage(locatedIndex,globalArray);
+//     clearDisplayMessage();
+//   }
+// }
+
 function deleteCard(e) {
-  debugger;
-  if (e.target.classList.contains("card__footer--delete" )) {
-    const foundCard = locateCard(e)
-    // let filterCondition = 
+  if (e.target.classList.contains('card__img--task')) {
+  const foundCard = locateCard(e)
+  const foundCardArr = foundCard.task
+  console.log('array', foundCardArr)
+  const filterConditionArray = foundCardArr.filter(task => task.checked === true)
+  if (filterConditionArray.length === foundCardArr.length) {
+    deleteCardBtnToggle(e);
+    }
+  }
+}
+
+function deleteCardfromStorage(e) { 
+  const locatedIndex = locateIndex(e);
+  foundCard.deleteFromStorage(locatedIndex, globalArray);
+}
+
+function deleteCardBtnToggle(e)  {
+  var targetBtn = e.target.classList.contains('card__footer--delete')
+  targetBtn ? (targetBtn.disabled = false) : (targetBtn.disabled = true);
+  }
+
+
+function deleteCardFromDom(e) {
+    console.log(e)
+  if (e.target.classList.contains('card__footer--delete')) {
     e.target.closest("article").remove();
     const locatedIndex = locateIndex(e);
-    foundCard.deleteFromStorage(locatedIndex,globalArray);
+    foundCard.deleteFromStorage(locatedIndex, globalArray);
     clearDisplayMessage();
   }
 }
@@ -185,19 +225,6 @@ function findTaskItem(e) {
 }
 /****** Card List functions ****/
 
-// function createListObject(task) {
-//   if (titleInput.value && navTaskContainer.innerText) {
-//     var list = new ToDoList(Date.now(),titleInput.value, false, task);
-//     globalArray.push(list);
-//     list.saveToStorage(globalArray);
-//     navTaskContainer.innerHTML = null;
-//     appendListCard(list);
-//     clearDisplayMessage();
-//     clearFormInput(navFormInputs);
-//   }
-//   return list 
-// };
-
 
 function createListObject(task) {
   if (titleInput.value && navTaskContainer.innerText) {
@@ -239,10 +266,10 @@ function markAsUrgent(e) {
   if (e.target.classList.contains('card__footer--urgent')) {
     const locatedCard = locateCard(e)
     locatedCard.updateTask(globalArray)
-  if(locatedCard.urgent === true) {
+  if (locatedCard.urgent === true) {
     e.target.setAttribute('src', 'images/urgent-active.svg');
     e.target.closest('article').style.background='#ffe89d'
-  }else {
+  } else {
     e.target.setAttribute('src', 'images/urgent.svg');
     e.target.closest('article').style.background ='#ffffff'
     }
@@ -252,10 +279,8 @@ function markAsUrgent(e) {
 function checkTask(task, e) {
     if (task.checked) {
       e.target.setAttribute('src', 'images/checkbox-active.svg')
-      // e.target.classList.closest('delete-item')
       console.log('chould be tru', task.checked)
     } else {
-
       e.target.setAttribute('src', 'images/checkbox.svg')
       console.log("chould be false", task.checked);
     }
@@ -276,9 +301,9 @@ function loadConditions() {
 
 
 // do masonary layout ,
-//*** */ fix card mobile layout , 
-//card main flex column. x
-// check == true or false,x
-// persist task urgent and task 
-// pass global array through to methods  x
-//remove delete from top input after everything 
+//*** */ fix card mobile layout, x 
+//card main flex column,  x
+// check == true or false, x
+// persist task urgent and task, x 
+// pass global array through to methods, x
+//remove delete from top input after everything, 
